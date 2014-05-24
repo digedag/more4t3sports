@@ -31,6 +31,3 @@ $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['t3sportsbet']['srv_Bet_analysebets_finis
 
 
 
-
-
-?>
