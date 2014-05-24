@@ -200,6 +200,8 @@ class tx_more4t3sports_t3socials_ticker_MessageBuilder
 		tx_t3socials_models_Network $network,
 		tx_t3socials_models_TriggerConfig $trigger
 	) {
+		// FIXME: die $confId sollte extern übergeben werden. Wozu wird hier
+		// nochmal die Trigger-Config übergeben
 		$confId = $network->getNetwork() . '.' . $trigger->getTriggerId() . '.';
 
 		tx_rnbase::load('tx_rnbase_util_Misc');
