@@ -25,26 +25,22 @@ require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
 tx_rnbase::load('tx_t3socials_models_TriggerConfig');
 
 /**
- * Trigger configuration for match_notes
+ * Resolver of match_notes
  */
-class tx_more4t3sports_t3socials_ticker_TriggerConfig
-	extends tx_t3socials_models_TriggerConfig {
-	const TICKER_TYPE = 't3sports_ticker';
-
+class tx_more4t3sports_t3socials_ticker_Resolver implements tx_t3socials_util_IResolver {
 	/**
-	 * @return void
+	 * Der Resolver lädt den zu indizierenden Datensatz aus der Datenbank.
+	 *
+	 * @param string $tableName
+	 * @param int $uid
+	 * @return object
 	 */
-	protected function initConfig() {
-		parent::initConfig();
-		$this->uid = self::TICKER_TYPE;
-		$this->setProperty('trigger_id', $this->uid);
-		$this->setProperty('table', 'tx_cfcleague_match_notes');
-		$this->setProperty('message_builder', 'tx_more4t3sports_t3socials_ticker_MessageBuilder');
-		$this->setProperty('resolver', 'tx_more4t3sports_t3socials_ticker_Resolver');
+	public function getRecord($tableName, $uid) {
+		$note = tx_rnbase::makeInstance('tx_cfcleague_models_MatchNote', $id);
+		return $note;
 	}
-
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/more4t3sports/t3socials/ticker/class.tx_more4t3sports_t3socials_ticker_TriggerConfig.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/more4t3sports/t3socials/ticker/class.tx_more4t3sports_t3socials_ticker_TriggerConfig.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/more4t3sports/t3socials/ticker/class.tx_more4t3sports_t3socials_ticker_Resolver.php']) {
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/more4t3sports/t3socials/ticker/class.tx_more4t3sports_t3socials_ticker_Resolver.php']);
 }
