@@ -27,7 +27,9 @@ require_once(t3lib_extMgm::extPath('cfc_league') . 'class.tx_cfcleague_db.php');
 class tx_more4t3sports_hooks_T3sportsBet {
 
 	public function analyseBets($params, $parent) {
+
 		$calculatedBets = $params['calculatedBets'];
+		$calculatedBets = 1;
 		if(!$calculatedBets) return;
 		$betgame = $params['betgame'];
 		// Nachricht twittern

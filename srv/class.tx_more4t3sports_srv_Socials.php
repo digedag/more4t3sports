@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 Rene Nitzsche (rene@system25.de)
+ *  (c) 2013-2014 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -42,11 +42,21 @@ class tx_more4t3sports_srv_Socials extends t3lib_svbase {
 	 * @param int $calculatedBets
 	 */
 	public function sendBetGameUpdated($betgame, $calculatedBets) {
-		$accounts = tx_t3socials_srv_ServiceRegistry::getNetworkService()->findAccounts('betgameUpdated');
+		$trigger = 'betgameUpdated';
+		$accounts = tx_t3socials_srv_ServiceRegistry::getNetworkService()->findAccounts($trigger);
 		if(empty($accounts)) return;
 
+		$builder = tx_rnbase::makeInstance('tx_more4t3sports_t3socials_betgame_MessageBuilder');
 		// Die generische Message bauen
-		$message = $this->buildGenericBetGameUpdated($betgame, $calculatedBets);
+		$message = $builder->buildGenericBetGameUpdated($betgame, $calculatedBets);
+		tx_rnbase::load('tx_t3socials_trigger_Config');
+		/* @var tx_t3socials_models_TriggerConfig $triggerConfig */
+		$triggerConfig = tx_t3socials_trigger_Config::getTriggerConfig($trigger);
+
+		tx_t3socials_srv_ServiceRegistry::getNetworkService()->sendMessage($message, $accounts, $builder, $triggerConfig);
+
+return;
+		// 
 		foreach($accounts As $account) {
 			// Für den Account die Connectionklasse laden
 			/**
@@ -66,6 +76,7 @@ class tx_more4t3sports_srv_Socials extends t3lib_svbase {
 	 * @return string
 	 */
 	protected function buildUrl4BetgameUpdated($betgame, $account) {
+		// Warum ist das abhängig vom Account?
 		$config = $account->getConfigurations();
 		tx_rnbase::load('tx_rnbase_util_Misc');
 		tx_rnbase_util_Misc::prepareTSFE();
@@ -74,15 +85,6 @@ class tx_more4t3sports_srv_Socials extends t3lib_svbase {
 		$link->initByTS($config, $account->getNetwork().'.betgameUpdated.link.show.', array());
 		$url = $link->makeUrl(false);
 		return $url;
-	}
-	protected function buildGenericBetGameUpdated($betgame, $calculatedBets) {
-		/**
-		 * @var tx_t3socials_models_Message
-		 */
-		$message = tx_rnbase::makeInstance('tx_t3socials_models_Message', 'betgameUpdated');
-		$message->setHeadline('Tippspiel aktualisiert');
-		$message->setMessage('Es wurden insgesamt ' . $calculatedBets .' Tipps ausgewertet.');
-		return $message;
 	}
 
 	/**
@@ -131,7 +133,7 @@ class tx_more4t3sports_srv_Socials extends t3lib_svbase {
 		}
 		if(!$found)
 			return false;
-		$msg = $this->buildGenericMessage($match, $ticker);
+		$msg = $this->buildGenericTickerMessage($match, $ticker);
 		return $msg;
 	}
 	/**
@@ -140,7 +142,7 @@ class tx_more4t3sports_srv_Socials extends t3lib_svbase {
 	 * @param tx_cfcleague_models_MatchNote $ticker
 	 * @return tx_t3socials_models_Message
 	 */
-	protected function buildGenericMessage($match, $ticker) {
+	protected function buildGenericTickerMessage($match, $ticker) {
 		$message = tx_rnbase::makeInstance('tx_t3socials_models_Message', 'liveticker');
 		$message->setData($ticker);
 
@@ -237,11 +239,11 @@ class tx_more4t3sports_srv_Socials extends t3lib_svbase {
 	public function sendMatchStateChanged($match) {
 		if(!($match->record['link_ticker']))
 			return;
-		$message = $this->buildMatchStatusMessage($match, 'matchstatus');
+		$message = $this->buildGenericMatchStatusMessage($match, 'matchstatus');
 		if($message)
 			tx_t3socials_srv_ServiceRegistry::getNetworkService()->sendMessage($message, 'matchstatus');
 	}
-	protected function buildMatchStatusMessage($match, $trigger) {
+	protected function buildGenericMatchStatusMessage($match, $trigger) {
 		if(!($match->isRunning() || $match->isFinished()))
 			return false;
 		$message = tx_rnbase::makeInstance('tx_t3socials_models_Message', $trigger);

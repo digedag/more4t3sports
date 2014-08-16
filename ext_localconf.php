@@ -20,6 +20,21 @@ t3lib_extMgm::addService($_EXTKEY,  't3sports_srv' /* sv type */,  'tx_more4t3sp
 	)
 );
 
+// *** **************** *** *
+// *** Register Trigger *** *
+// *** **************** *** *
+tx_rnbase::load('tx_t3socials_trigger_Config');
+// Diese Trigger registrieren, damit sie im TCE-Formular auswählbar sind.
+// Diese Events werden nicht über den Autosend von T3socials ausgeführt.
+tx_t3socials_trigger_Config::registerTrigger(
+	tx_rnbase::makeInstance('tx_t3socials_models_TriggerConfig', array('trigger_id'=>'matchstatus'))
+);
+tx_t3socials_trigger_Config::registerTrigger(
+	tx_rnbase::makeInstance('tx_t3socials_models_TriggerConfig', array('trigger_id'=>'betgameUpdated'))
+);
+tx_t3socials_trigger_Config::registerTrigger(
+	tx_rnbase::makeInstance('tx_t3socials_models_TriggerConfig', array('trigger_id'=>'liveticker'))
+);
 
 // -------------------------
 // ------- HOOKS -----------

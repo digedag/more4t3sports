@@ -57,6 +57,7 @@ class tx_more4t3sports_hooks_TCEHook {
 	 */
 	public function processDatamap_afterDatabaseOperations($status, $table, $id, $fieldArray, &$tcemain) {
 		if($table == 'tx_cfcleague_match_notes' && $status=='new') {
+			// Nur wirklich aktuelle Tickermeldungen verbreiten
 			$id = $tcemain->substNEWwithIDs[$id];
 			$note = tx_rnbase::makeInstance('tx_cfcleague_models_MatchNote', $id);
 			tx_more4t3sports_srv_Registry::getSocialService()->sendLiveticker($note);
