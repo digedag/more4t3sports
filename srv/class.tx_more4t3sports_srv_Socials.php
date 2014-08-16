@@ -53,38 +53,7 @@ class tx_more4t3sports_srv_Socials extends t3lib_svbase {
 		/* @var tx_t3socials_models_TriggerConfig $triggerConfig */
 		$triggerConfig = tx_t3socials_trigger_Config::getTriggerConfig($trigger);
 
-		tx_t3socials_srv_ServiceRegistry::getNetworkService()->sendMessage($message, $accounts, $builder, $triggerConfig);
-
-return;
-		// 
-		foreach($accounts As $account) {
-			// Für den Account die Connectionklasse laden
-			/**
-			 * @var tx_t3socials_network_IConnection
-			 */
-			$connection = tx_t3socials_srv_ServiceRegistry::getNetworkService()->getConnection($account);
-			$connection->setNetwork($account);
-			$message->setUrl($this->buildUrl4BetgameUpdated($betgame, $account));
-			$connection->sendMessage($message);
-		}
-	}
-	/**
-	 * URL auf Tipspiel-Gesamtwertung bauen
-	 *
-	 * @param tx_rnbase_model_base $betgame
-	 * @param tx_t3socials_models_Network $account
-	 * @return string
-	 */
-	protected function buildUrl4BetgameUpdated($betgame, $account) {
-		// Warum ist das abhängig vom Account?
-		$config = $account->getConfigurations();
-		tx_rnbase::load('tx_rnbase_util_Misc');
-		tx_rnbase_util_Misc::prepareTSFE();
-		$link = $config->createLink();
-		$link->designatorString = 't3sportsbet'; // tx_ttnews[tt_news]
-		$link->initByTS($config, $account->getNetwork().'.betgameUpdated.link.show.', array());
-		$url = $link->makeUrl(false);
-		return $url;
+		return tx_t3socials_srv_ServiceRegistry::getNetworkService()->sendMessage($message, $accounts, $builder, $triggerConfig);
 	}
 
 	/**
@@ -104,96 +73,20 @@ return;
 		if(!$this->isTickerable($match, $ticker))
 			return;
 
-		$accounts = tx_t3socials_srv_ServiceRegistry::getNetworkService()->findAccounts('liveticker');
+		$trigger = 'liveticker';
+		$accounts = tx_t3socials_srv_ServiceRegistry::getNetworkService()->findAccounts($trigger);
 		if(empty($accounts)) return;
 
-		$message = $this->buildTickerMessage($match, $ticker);
+		$builder = tx_rnbase::makeInstance('tx_more4t3sports_t3socials_ticker_MessageBuilder');
+		// Die generische Message bauen
+		$message = $builder->buildTickerMessage($match, $ticker);
+
+		tx_rnbase::load('tx_t3socials_trigger_Config');
+		/* @var tx_t3socials_models_TriggerConfig $triggerConfig */
+		$triggerConfig = tx_t3socials_trigger_Config::getTriggerConfig($trigger);
+
 		if($message)
-			tx_t3socials_srv_ServiceRegistry::getNetworkService()->sendMessage($message, 'liveticker');
-//			$this->sendMessage($message, $accounts);
-		
-	}
-	/**
-	 * @param tx_cfcleague_models_Match $match
-	 * @param tx_cfcleague_models_MatchNote $ticker
-	 * @return tx_t3socials_models_IMessage
-	 */
-	protected function buildTickerMessage($match, $ticker) {
-		// Alle Ticker laden
-		tx_rnbase::load('tx_cfcleaguefe_util_MatchTicker');
-		$tickerArr =& tx_cfcleaguefe_util_MatchTicker::getTicker4Match($match);
-		$tickerArr = array_reverse($tickerArr);
-		$found = false;
-		foreach($tickerArr As $matchTicker) {
-			if($matchTicker->uid == $ticker->uid) {
-				$found = true;
-				$ticker = $matchTicker;
-				break;
-			}
-		}
-		if(!$found)
-			return false;
-		$msg = $this->buildGenericTickerMessage($match, $ticker);
-		return $msg;
-	}
-	/**
-	 * 
-	 * @param tx_cfcleague_models_Match $match
-	 * @param tx_cfcleague_models_MatchNote $ticker
-	 * @return tx_t3socials_models_Message
-	 */
-	protected function buildGenericTickerMessage($match, $ticker) {
-		$message = tx_rnbase::makeInstance('tx_t3socials_models_Message', 'liveticker');
-		$message->setData($ticker);
-
-		// Spielstand
-		$prefix = $match->getHomeNameShort() . '-' . $match->getGuestNameShort();
-		if($match->record['status'] > 0 || $ticker->getMinute() > 0) {
-			// Das Ergebnis aus dem Ticker lesen, da es aktueller ist
-			$prefix .= ' ' . $ticker->record['goals_home'] .':' . $ticker->record['goals_guest'];
-			//$prefix .= ' ' . $match->getGoalsHome() .':' . $match->getGoalsGuest();
-		}
-		// Paarung und Spielstand als Headline
-		$message->setHeadline($prefix);
-
-		$player = $ticker->getPlayer();
-		if(!(is_object($player) && $player->isValid())) $player = false;
-
-		$msg = '';
-		switch($ticker->getType()) {
-			case 10:
-			case 11:
-			case 12:
-			case 13:
-				if(!$player) return; // Tor ohne Spieler geht nicht
-				$msg .= 'Tor durch ' . $player->getName();
-				break;
-			case 30:
-				if(!$player) return; // Tor ohne Spieler geht nicht
-				$msg .= 'Eigentor durch ' . $player->getName();
-				break;
-			case 70:
-				if(!$player) return; // Tor ohne Spieler geht nicht
-				$msg .= 'Gelbe Karte für ' . $player->getName();
-				break;
-			case 71:
-				if(!$player) return; // Tor ohne Spieler geht nicht
-				$msg .= 'Gelb-Rot für ' . $player->getName();
-				break;
-			case 72:
-				if(!$player) return; // Tor ohne Spieler geht nicht
-				$msg .= 'Rote Karte für ' . $player->getName();
-				break;
-//			default:
-//				$msg .= $player->getName();
-		}
-
-		// Die automatische Meldung ist der Subtitle
-		$message->setIntro($msg);
-
-		$message->setMessage($ticker->record['comment']);
-		
-		return $message;
+			return tx_t3socials_srv_ServiceRegistry::getNetworkService()->sendMessage($message, $accounts, $builder, $triggerConfig);
 	}
 	private function isTickerable($match, $ticker) {
 		$ignoreTypes = array(200, 80,81,31);

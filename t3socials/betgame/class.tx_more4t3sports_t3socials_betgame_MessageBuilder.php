@@ -22,8 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
-tx_rnbase::load('tx_t3socials_trigger_MessageBuilder');
-tx_rnbase::load('tx_more4t3sports_t3socials_ticker_TriggerConfig');
+tx_rnbase::load('tx_t3socials_trigger_IMessageBuilder');
 
 
 /**
