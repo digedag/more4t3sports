@@ -130,36 +130,35 @@ class tx_more4t3sports_srv_Socials extends t3lib_svbase {
 	 * @param tx_cfcleague_models_Match $match
 	 */
 	public function sendMatchStateChanged($match) {
+		$trigger = 'matchstatus';
 		if(!($match->record['link_ticker']))
 			return;
-		$message = $this->buildGenericMatchStatusMessage($match, 'matchstatus');
-		if($message)
-			tx_t3socials_srv_ServiceRegistry::getNetworkService()->sendMessage($message, 'matchstatus');
-	}
-	protected function buildGenericMatchStatusMessage($match, $trigger) {
-		if(!($match->isRunning() || $match->isFinished()))
-			return false;
-		$message = tx_rnbase::makeInstance('tx_t3socials_models_Message', $trigger);
-		$message->setData($match);
 
-		// Spielstand
-		$prefix = $match->getHomeNameShort() . '-' . $match->getGuestNameShort();
-		if($match->record['status'] > 0) {
-			$prefix .= ' ' . $match->getGoalsHome() .':' . $match->getGoalsGuest();
-		}
-		// Paarung und Spielstand als Headline
-		$message->setHeadline($prefix);
+		$accounts = tx_t3socials_srv_ServiceRegistry::getNetworkService()->findAccounts($trigger);
+		if(empty($accounts)) return;
 
-		if($match->isRunning()) {
-			// Anstoß
-			$message->setIntro('Anstoß');
+		$builder = tx_rnbase::makeInstance('tx_more4t3sports_t3socials_messagebuilder_MatchStatus');
+		$message = $builder->buildGenericMatchStatusMessage($match, $trigger);
+
+		if($message) {
+			tx_rnbase::load('tx_t3socials_trigger_Config');
+			/* @var tx_t3socials_models_TriggerConfig $triggerConfig */
+			$triggerConfig = tx_t3socials_trigger_Config::getTriggerConfig($trigger);
+			$states = tx_t3socials_srv_ServiceRegistry::getNetworkService()->sendMessage($message, $accounts, $builder, $triggerConfig);
+			$this->logSuccessfulNotifications($states, $trigger);
 		}
-		else {
-			// Abpfiff
-			$message->setIntro('Spielende');
-		}
-		return $message;
 	}
+	protected function logSuccessfulNotifications($states, $trigger) {
+		$infos = array();
+		foreach ($states As $status) {
+			if($status->isStateSuccess()) {
+				$infos[] = $status->getMessage();
+			}
+		}
+		if(!empty($infos))
+			tx_rnbase_util_Logger::warn('Notification for '.$trigger.' send!', 'more4t3sports', $infos);
+	}
+
 }
 
 
