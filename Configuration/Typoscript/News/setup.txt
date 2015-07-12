@@ -2,9 +2,9 @@ lib.t3sports.ttnews {
 	_template.path = EXT:more4t3sports/Resources/Private/Templates/tt_news.html
 	_template.subpartName = ###NEWSREPORT###
 
-  datetime.strftime = %d.%m.%y
-  short.wrap = <p>|</p>
-  bodytext.parseFunc =< lib.parseFunc_RTE
+	datetime.strftime = %d.%m.%y
+	short.wrap = <p>|</p>
+	bodytext.parseFunc =< lib.parseFunc_RTE
 	links.news.pid = {$plugin.tt_news.singlePid}
 	links.news._cfg.params.tt_news = uid
 	links.news.qualifier = tx_ttnews
