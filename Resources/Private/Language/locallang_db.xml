@@ -6,12 +6,13 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-			<label index="plugin_tab_common">Common</label>
-			<label index="plugin_tab_action">View</label>
-			<label index="plugin_tab_tssetup">TS-Setup</label>
+			<label index="tx_cfcleague_games_newspreview">Match preview</label>
+			<label index="tx_cfcleague_games_newsreport">Match report</label>
 
 		</languageKey>
 		<languageKey index="de" type="array">
+			<label index="tx_cfcleague_games_newspreview">Vorbericht</label>
+			<label index="tx_cfcleague_games_newsreport">Spielbericht</label>
 
 		</languageKey>
 	</data>
