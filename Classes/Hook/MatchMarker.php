@@ -60,11 +60,14 @@ class Tx_More4t3sports_Hook_MatchMarker {
 			$configurations->get($confId.'_template.subpartName'));
 
 		$item = $this->loadNews($match->record[$fieldName]);
-		/* @var $marker tx_rnbase_util_SimpleMarker */
-		$marker = tx_rnbase::makeInstance('tx_rnbase_util_SimpleMarker');
-		$newsTemplate = $marker->parseTemplate($newsTemplate, $item, $formatter, $confId, 'NEWS');
+		$newsReport = '';
+		if($item) {
+			/* @var $marker tx_rnbase_util_SimpleMarker */
+			$marker = tx_rnbase::makeInstance('tx_rnbase_util_SimpleMarker');
+			$newsReport = $marker->parseTemplate($newsTemplate, $item, $formatter, $confId, 'NEWS');
+		}
 		$markerArray = array(
-				'###'.$markerPrefix.'###' => $newsTemplate,
+				'###'.$markerPrefix.'###' => $newsReport,
 		);
 		$template = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray);
 		return $template;
