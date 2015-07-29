@@ -1,9 +1,11 @@
 (add new changes on top of this file)
 
-Anbindung an T3socials
+#Änderungen
 
-Änderungen
-----------
+v0.3.0 (29.07.2015)
+ * Anbindung von tt_news für Spiel- und Vorberichte
+ * TER-Upload
+ * Dokumentation
 
 v0.1.0 (22.02.2012)
  * Unterstützung für Tipspiel "betgameUpdated"
