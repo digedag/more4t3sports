@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 Rene Nitzsche (rene@system25.de)
+ *  (c) 2012-2017 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,8 +21,6 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
 tx_rnbase::load('tx_rnbase_util_Logger');
 
@@ -47,9 +45,9 @@ class tx_more4t3sports_util_TwitterMessageBuilder {
 	/**
 	 * Creates a tweet from generic message of liveticker
 	 * Beim Ticker kommt es darauf an die entscheidenden Info
-	 * zu liefern. Die URL hat keine Prio, weil sie immer gleich 
+	 * zu liefern. Die URL hat keine Prio, weil sie immer gleich
 	 * ist, und dann bei anderen Meldungen kommt.
-	 * 
+	 *
 	 * @param tx_t3socials_models_IMessage $message
 	 * @param tx_t3socials_models_Network $account
 	 * @param string $confId
@@ -64,7 +62,7 @@ class tx_more4t3sports_util_TwitterMessageBuilder {
 		// Die automatische Meldung ist der Subtitle
 		$msg = $message->getIntro();
 		$msgLen = strlen($msg);
-		
+
 		// Jetzt die Länge berechnen
 		// 140 Gesamt, 20 Url
 		// Die URL hängen wir am Ende nur ran, wenn noch Platz ist
@@ -120,6 +118,3 @@ class tx_more4t3sports_util_TwitterMessageBuilder {
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/more4t3sports/util/class.tx_more4t3sports_util_TwitterMessageBuilder.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/more4t3sports/util/class.tx_more4t3sports_util_TwitterMessageBuilder.php']);
-}

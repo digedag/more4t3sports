@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013-2014 Rene Nitzsche (rene@system25.de)
+ *  (c) 2013-2017 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,18 +22,17 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-require_once(PATH_t3lib.'class.t3lib_svbase.php');
+tx_rnbase::load('Tx_Rnbase_Service_Base');
 tx_rnbase::load('tx_rnbase_util_DB');
 tx_rnbase::load('tx_rnbase_util_Logger');
 
 
 /**
  * Service for accessing network account information
- * 
+ *
  * @author Rene Nitzsche
  */
-class tx_more4t3sports_srv_Socials extends t3lib_svbase {
+class tx_more4t3sports_srv_Socials extends Tx_Rnbase_Service_Base {
 
 	/**
 	 * Versenden eine Twittermeldung bei Aktualisierung des Tippspiels
@@ -62,7 +61,7 @@ class tx_more4t3sports_srv_Socials extends t3lib_svbase {
 	 * - der Typ muss konfiguriert sein
 	 * - Es muss ein Livetickerspiel sein
 	 * Die Implementierung ist derzeit fest auf Twitter ausgelegt.
-	 * 
+	 *
 	 * @param tx_cfcleague_models_MatchNote $ticker
 	 */
 	public function sendLiveTicker($ticker) {
@@ -109,7 +108,7 @@ class tx_more4t3sports_srv_Socials extends t3lib_svbase {
 //tx_cfcleague_match_notes.type.changein', '81');
 //tx_cfcleague_match_notes.type.captain', '200');
 
-	
+
 	}
 	/**
 	 * @param tx_cfcleague_models_MatchNote $ticker
@@ -124,14 +123,14 @@ class tx_more4t3sports_srv_Socials extends t3lib_svbase {
 
 		return false;
 	}
-	
+
 	/**
 	 * Versand einer Nachricht, mit dem aktuellen Spielstatus.
 	 * @param tx_cfcleague_models_Match $match
 	 */
 	public function sendMatchStateChanged($match) {
 		$trigger = 'matchstatus';
-		if(!($match->record['link_ticker']))
+		if(!($match->getProperty('link_ticker')))
 			return;
 
 		$accounts = tx_t3socials_srv_ServiceRegistry::getNetworkService()->findAccounts($trigger);

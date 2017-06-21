@@ -23,15 +23,13 @@
 ***************************************************************/
 
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
 tx_rnbase::load('tx_rnbase_util_Misc');
 
 /**
  * Access a service instance
  */
 class tx_more4t3sports_srv_Registry {
-	
+
 	/**
 	 * Liefert den Network-Service
 	 * @return tx_more4t3sports_srv_Socials

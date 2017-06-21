@@ -1,0 +1,43 @@
+{
+	"name" : "digedag/more4t3sports",
+	"description" : "Useful extensions for T3sports.",
+	"version" : "0.4.0",
+	"type" : "typo3-cms-extension",
+	"keywords" : [
+		"TYPO3 CMS",
+		"sports",
+		"football"
+	],
+	"homepage" : "http://www.system25.de/",
+	"license" : "GPL-2.0+",
+	"authors" : [{
+			"name" : "René Nitzsche",
+			"email" : "rene@system25.de",
+			"role" : "Developer"
+		}
+	],
+	"support" : {
+		"email" : "rene@system25.de",
+		"source" : "https://github.com/digedag/more4t3sports",
+		"issues" : "https://github.com/digedag/more4t3sports/issues"
+	},
+	"replace" : {
+		"more4t3sports" : "self.version",
+		"typo3-ter/more4t3sports" : "self.version"
+	},
+	"require" : {
+		"typo3/cms-core" : ">=4.5.0 <=7.6.99",
+		"digedag/rn-base" : ">=1.2.0",
+		"digedag/cfc-league-fe" : ">=1.1.0"
+	},
+	"autoload" : {
+		"classmap" : [
+			"Classes/",
+			"hooks/",
+			"srv/",
+			"t3socials/",
+			"tests/",
+			"util/"
+		]
+	}
+}

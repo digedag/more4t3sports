@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2012 Rene Nitzsche <rene@system25.de>
+*  (c) 2012-2017 Rene Nitzsche <rene@system25.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,7 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('cfc_league') . 'class.tx_cfcleague_db.php');
 
 class tx_more4t3sports_hooks_TCEHook {
 
@@ -70,9 +69,5 @@ class tx_more4t3sports_hooks_TCEHook {
 		}
 	}
 
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/more4t3sports/hooks/class.tx_more4t3sports_hooks_TCEHook.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/more4t3sports/hooks/class.tx_more4t3sports_hooks_TCEHook.php']);
 }
 

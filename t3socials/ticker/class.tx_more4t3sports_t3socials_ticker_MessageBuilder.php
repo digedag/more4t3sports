@@ -21,7 +21,6 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
 tx_rnbase::load('tx_t3socials_trigger_IMessageBuilder');
 
 
@@ -67,7 +66,7 @@ class tx_more4t3sports_t3socials_ticker_MessageBuilder
 	protected function buildGenericMessage4Ticker($match, $ticker) {
 		$message = tx_rnbase::makeInstance('tx_t3socials_models_Message', 'liveticker');
 		$message->setData($ticker);
-	
+
 		// Spielstand
 		$prefix = $match->getHomeNameShort() . '-' . $match->getGuestNameShort();
 		if($match->record['status'] > 0 || $ticker->getMinute() > 0) {
@@ -77,10 +76,10 @@ class tx_more4t3sports_t3socials_ticker_MessageBuilder
 		}
 		// Paarung und Spielstand als Headline
 		$message->setHeadline($prefix);
-	
+
 		$player = $ticker->getPlayer();
 		if(!(is_object($player) && $player->isValid())) $player = false;
-	
+
 		$msg = '';
 		switch($ticker->getType()) {
 			case 10:
@@ -109,12 +108,12 @@ class tx_more4t3sports_t3socials_ticker_MessageBuilder
 				//			default:
 				//				$msg .= $player->getName();
 		}
-	
+
 		// Die automatische Meldung ist der Subtitle
 		$message->setIntro($msg);
-	
+
 		$message->setMessage($ticker->record['comment']);
-	
+
 		return $message;
 	}
 

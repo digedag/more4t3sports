@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Rene Nitzsche (rene@system25.de)
+ *  (c) 2013-2017 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,7 +22,6 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
 
 tx_rnbase::load('tx_rnbase_util_Logger');
 tx_rnbase::load('tx_t3socials_network_pushd_MessageBuilder');
@@ -50,7 +49,7 @@ class tx_more4t3sports_util_PushdMessageBuilder extends tx_t3socials_network_pus
 	 * Wichtig ist die Festlegung des Event-Typs. Bei den Tickermeldungen,
 	 * sollen verschiedene Events angeboten werden, damit man z.B. nur Tore
 	 * abonnieren kann.
-	 * 
+	 *
 	 * @param tx_t3socials_models_IMessage $message
 	 * @param tx_t3socials_models_Network $account
 	 * @param string $confId
@@ -81,14 +80,14 @@ class tx_more4t3sports_util_PushdMessageBuilder extends tx_t3socials_network_pus
 		return $data;
 	}
 	/**
-	 * 
+	 *
 	 * @param unknown_type $ticker
 	 * @param unknown_type $mappings
 	 */
 	protected function findEvent($ticker, $mappings) {
 		$type = $ticker->getType();
 		foreach($mappings As $event => $typeString) {
-			$types = array_flip(t3lib_div::trimExplode(',', $typeString));
+			$types = array_flip(Tx_Rnbase_Utility_Strings::trimExplode(',', $typeString));
 			if(array_key_exists($type, $types))
 				return $event;
 		}
@@ -96,6 +95,3 @@ class tx_more4t3sports_util_PushdMessageBuilder extends tx_t3socials_network_pus
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/more4t3sports/util/class.tx_more4t3sports_util_TwitterMessageBuilder.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/more4t3sports/util/class.tx_more4t3sports_util_TwitterMessageBuilder.php']);
-}

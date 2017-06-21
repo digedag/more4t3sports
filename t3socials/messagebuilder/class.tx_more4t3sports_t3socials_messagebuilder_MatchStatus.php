@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2015 Rene Nitzsche <rene@system25.de>
+*  (c) 2015-2017 Rene Nitzsche <rene@system25.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,7 +21,6 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
 tx_rnbase::load('tx_t3socials_trigger_IMessageBuilder');
 
 
@@ -35,7 +34,7 @@ class tx_more4t3sports_t3socials_messagebuilder_MatchStatus
 	}
 
 	/**
-	 * 
+	 *
 	 * @param tx_cfcleague_models_Match $match
 	 * @return tx_t3socials_models_Message
 	 */
@@ -45,7 +44,7 @@ class tx_more4t3sports_t3socials_messagebuilder_MatchStatus
 		/* @var $message tx_t3socials_models_Message */
 		$message = tx_rnbase::makeInstance('tx_t3socials_models_Message', $trigger);
 		$message->setData($match);
-	
+
 		// Spielstand
 		$prefix = $match->getHomeNameShort() . '-' . $match->getGuestNameShort();
 		if($match->record['status'] > 0) {
@@ -53,7 +52,7 @@ class tx_more4t3sports_t3socials_messagebuilder_MatchStatus
 		}
 		// Paarung und Spielstand als Headline
 		$message->setHeadline($prefix);
-	
+
 		if($match->isRunning()) {
 			// Anstoß
 			$message->setIntro('Anstoß');

@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Rene Nitzsche (rene@system25.de)
+ *  (c) 2013-2017 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,8 +22,6 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('rn_base') . 'class.tx_rnbase.php');
-
 
 tx_rnbase::load('tx_more4t3sports_util_PushdMessageBuilder');
 
@@ -42,7 +40,4 @@ class tx_more4t3sports_tests_util_PushdMessageBuilder extends tx_more4t3sports_u
 	public function buildTickerMessage($message, $account, $confId) {
 		return parent::buildTickerMessage($message, $account, $confId);
 	}
-}
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/more4t3sports/tests/class.tx_more4t3sports_tests_utilPushdMessageTicker_testcase.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/more4t3sports/tests/class.tx_more4t3sports_tests_utilPushdMessageTicker_testcase.php']);
 }

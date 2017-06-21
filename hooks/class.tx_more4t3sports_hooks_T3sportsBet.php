@@ -22,7 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(t3lib_extMgm::extPath('cfc_league') . 'class.tx_cfcleague_db.php');
 
 class tx_more4t3sports_hooks_T3sportsBet {
 
@@ -34,9 +33,5 @@ class tx_more4t3sports_hooks_T3sportsBet {
 		// Nachricht twittern
 		tx_more4t3sports_srv_Registry::getSocialService()->sendBetGameUpdated($betgame, $calculatedBets);
 	}
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/more4t3sports/hooks/class.tx_more4t3sports_hooks_T3sportsBet.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/more4t3sports/hooks/class.tx_more4t3sports_hooks_T3sportsBet.php']);
 }
 

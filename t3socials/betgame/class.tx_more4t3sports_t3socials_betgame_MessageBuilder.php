@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2014 Rene Nitzsche <rene@system25.de>
+*  (c) 2014-2017 Rene Nitzsche <rene@system25.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,7 +21,6 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-require_once t3lib_extMgm::extPath('rn_base', 'class.tx_rnbase.php');
 tx_rnbase::load('tx_t3socials_trigger_IMessageBuilder');
 
 
@@ -34,7 +33,7 @@ class tx_more4t3sports_t3socials_betgame_MessageBuilder
 	public function buildGenericMessage(tx_t3socials_models_Base $model) {
 		// Not used
 	}
-	
+
 	public function buildGenericBetGameUpdated($betgame, $calculatedBets) {
 		// Das wird nochmal für den Link benötigt
 		$this->betgame = $betgame;
