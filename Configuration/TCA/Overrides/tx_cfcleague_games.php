@@ -2,7 +2,12 @@
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
 tx_rnbase::load('tx_rnbase_util_Extensions');
+tx_rnbase::load('tx_rnbase_util_TYPO3');
+if(!tx_rnbase_util_TYPO3::isExtLoaded('tt_news') && !tx_rnbase_util_TYPO3::isExtLoaded('news')) {
+    return ;
+}
 
+$tableName = tx_rnbase_util_TYPO3::isExtLoaded('news') ? 'tx_news_domain_model_news' : 'tt_news';
 $columns = array(
 	'newspreview' => Array (
 			'exclude' => 1,
@@ -10,7 +15,7 @@ $columns = array(
 			'config' => Array (
 					'type' => 'group',
 					'internal_type' => 'db',
-					'allowed' => 'tt_news',
+					'allowed' => $tableName,
 					'size' => 1,
 					'minitems' => 0,
 					'maxitems' => 1,
@@ -22,7 +27,7 @@ $columns = array(
 			'config' => Array (
 					'type' => 'group',
 					'internal_type' => 'db',
-					'allowed' => 'tt_news',
+					'allowed' => $tableName,
 					'size' => 1,
 					'minitems' => 0,
 					'maxitems' => 1,

@@ -15,7 +15,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'description' => 'Useful extensions for T3sports.',
 	'category' => 'misc',
 	'shy' => 0,
-	'version' => '0.4.0',
+	'version' => '0.4.9',
 	'dependencies' => 'cms',
 	'conflicts' => '',
 	'priority' => '',
@@ -34,10 +34,10 @@ $EM_CONF[$_EXTKEY] = array(
 	'CGLcompliance_note' => '',
 	'constraints' => array(
 		'depends' => array(
-			'typo3' => '4.5.0-7.6.99',
+			'typo3' => '6.2.0-8.7.99',
 			'php' => '5.3.7-8.1.99',
-			'rn_base' => '0.15.0-0.0.0',
-			'cfc_league' => '1.0.2-0.0.0',
+			'rn_base' => '1.4.0-0.0.0',
+			'cfc_league' => '1.1.0-0.0.0',
 		),
 		'conflicts' => array(
 		),
