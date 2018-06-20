@@ -1,7 +1,6 @@
 {
 	"name" : "digedag/more4t3sports",
 	"description" : "Useful extensions for T3sports.",
-	"version" : "0.4.0",
 	"type" : "typo3-cms-extension",
 	"keywords" : [
 		"TYPO3 CMS",
@@ -9,7 +8,7 @@
 		"football"
 	],
 	"homepage" : "http://www.system25.de/",
-	"license" : "GPL-2.0+",
+	"license" : "GPL-2.0-or-later",
 	"authors" : [{
 			"name" : "René Nitzsche",
 			"email" : "rene@system25.de",
