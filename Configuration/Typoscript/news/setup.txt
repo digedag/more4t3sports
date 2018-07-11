@@ -1,0 +1,21 @@
+lib.t3sports.news {
+	_template.path = EXT:more4t3sports/Resources/Private/Templates/news.html
+	_template.subpartName = ###NEWSREPORT###
+
+	datetime.strftime = %d.%m.%y
+	short.wrap = <p>|</p>
+	bodytext.parseFunc =< lib.parseFunc_RTE
+	links.news.pid = {$plugin.tx_news.settings.sitemap.detailPid}
+	links.news._cfg.params.news = uid
+	links.news.qualifier = tx_news_pi1
+}
+
+lib.t3sports.match {
+
+	newsreport =< lib.t3sports.news
+	newspreview =< lib.t3sports.news
+	newspreview {
+		_template.subpartName = ###NEWSPREVIEW###
+	}
+
+}

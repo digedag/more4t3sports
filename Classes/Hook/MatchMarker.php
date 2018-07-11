@@ -38,7 +38,6 @@ class Tx_More4t3sports_Hook_MatchMarker
         $match = $params['match'];
         $formatter = $params['formatter'];
         $confId = $params['confid'];
-
         $template = $this->addNews($match, $template, $params['marker'], $confId, $formatter, 'newsreport');
         $template = $this->addNews($match, $template, $params['marker'], $confId, $formatter, 'newspreview');
         $params['template'] = $template;
@@ -59,10 +58,21 @@ class Tx_More4t3sports_Hook_MatchMarker
         if (! tx_rnbase_util_BaseMarker::containsMarker($template, $markerPrefix)) {
             return $template;
         }
+        $newsExt = null;
+        if (tx_rnbase_util_TYPO3::isExtLoaded('news')) {
+            $newsExt = 'news';
+        }
+        elseif (tx_rnbase_util_TYPO3::isExtLoaded('tt_news')) {
+            $newsExt = 'tt_news';
+        }
+        if (!$newsExt) {
+            return $template;
+        }
         $configurations = $formatter->getConfigurations();
         $newsTemplate = tx_rnbase_util_Templates::getSubpartFromFile($configurations->get($confId . '_template.path'), $configurations->get($confId . '_template.subpartName'));
 
-        $item = $this->loadNews($match->getProperty($fieldName));
+        $item = $this->loadNews($match->getProperty($fieldName), $newsExt);
+
         $newsReport = '';
         if ($item) {
             /* @var $marker tx_rnbase_util_SimpleMarker */
@@ -79,15 +89,17 @@ class Tx_More4t3sports_Hook_MatchMarker
     /**
      *
      * @param int $uid
+     * @param string $newsExt
      * @return Ambigous <NULL, tx_rnbase_model_base>
      */
-    protected function loadNews($uid)
+    protected function loadNews($uid, $newsExt)
     {
+        $table = $newsExt == 'news' ? 'tx_news_domain_model_news' : 'tt_news';
         $options = [
             'wrapperclass' => 'tx_rnbase_model_base',
             'where' => 'uid = ' . $uid
         ];
-        $items = Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', 'tt_news', $options);
+        $items = Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', $table, $options);
         return empty($items) ? NULL : reset($items);
     }
 }
