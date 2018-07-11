@@ -7,6 +7,6 @@ What is this extension for?
 ---------------------------
 It provides some additinal features for T3sports.
 - an API to communicate with socials networks.
-- use tt_news records for match reports
+- use **tt_news** or **news** records for match reports
 
 [Read documentation for more information](Documentation/README.md)

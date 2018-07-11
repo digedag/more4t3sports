@@ -1,6 +1,8 @@
-(add new changes on top of this file)
+# Änderungen
 
-#Änderungen
+v0.5.0 (11.07.2018)
+ * Anbindung von news für Spiel- und Vorberichte
+ * Support TYPO3 7.6 und 8.7
 
 v0.3.0 (29.07.2015)
  * Anbindung von tt_news für Spiel- und Vorberichte
