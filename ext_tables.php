@@ -6,4 +6,4 @@ if (!defined ('TYPO3_MODE')) {
 tx_rnbase::load('tx_rnbase_util_TYPO3');
 
 
-tx_rnbase_util_Extensions::addStaticFile($_EXTKEY,'Configuration/Typoscript/News/', 'T3sports with tt_news');
+tx_rnbase_util_Extensions::addStaticFile($_EXTKEY,'Configuration/Typoscript/tt_news/', 'T3sports with tt_news');
