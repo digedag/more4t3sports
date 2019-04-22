@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2014-2018 Rene Nitzsche <rene@system25.de>
+ *  (c) 2014-2019 Rene Nitzsche <rene@system25.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -82,7 +82,7 @@ class tx_more4t3sports_t3socials_ticker_MessageBuilder implements tx_t3socials_t
         // Paarung und Spielstand als Headline
         $message->setHeadline($prefix);
 
-        $player = $ticker->getPlayer();
+        $player = $ticker->getPlayerInstance();
         if (! (is_object($player) && $player->isValid())) {
             $player = false;
         }
