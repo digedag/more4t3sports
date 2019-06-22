@@ -37,6 +37,9 @@
 			"t3socials/",
 			"tests/",
 			"util/"
-		]
+		],
+    "psr-4": {
+      "Sys25\\More4T3sports\\": "Classes"
+    }
 	}
 }

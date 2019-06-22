@@ -1,6 +1,7 @@
 lib.t3sports.news {
 	_template.path = EXT:more4t3sports/Resources/Private/Templates/news.html
 	_template.subpartName = ###NEWSREPORT###
+	_template.newsPlugin = {$plugin.tx_more4t3sports.newsPluginUid}
 
 	datetime.strftime = %d.%m.%y
 	short.wrap = <p>|</p>
@@ -17,5 +18,4 @@ lib.t3sports.match {
 	newspreview {
 		_template.subpartName = ###NEWSPREVIEW###
 	}
-
 }

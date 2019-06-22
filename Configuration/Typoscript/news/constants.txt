@@ -1,0 +1,4 @@
+plugin.tx_more4t3sports {
+	# cat=More4T3sports (news)/newsPluginUid; type=int+;label=UID of news plugin to render match reports and previews
+	newsPluginUid = 0
+}

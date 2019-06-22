@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************
  *  Copyright notice
  *
@@ -58,9 +59,17 @@ class Tx_More4t3sports_Hook_MatchMarker
         if (! tx_rnbase_util_BaseMarker::containsMarker($template, $markerPrefix)) {
             return $template;
         }
+
+        $configurations = $formatter->getConfigurations();
+        $pluginRendered = false;
         $newsExt = null;
         if (tx_rnbase_util_TYPO3::isExtLoaded('news')) {
             $newsExt = 'news';
+            // Wird ein Plugin verwendet?
+            if ($pluginUid = $configurations->get($confId.'_template.newsPlugin', true)) {
+                $newsReport = $this->renderContent($configurations, $pluginUid, $match->getProperty($fieldName));
+                $pluginRendered = true;
+            }
         }
         elseif (tx_rnbase_util_TYPO3::isExtLoaded('tt_news')) {
             $newsExt = 'tt_news';
@@ -68,17 +77,20 @@ class Tx_More4t3sports_Hook_MatchMarker
         if (!$newsExt) {
             return $template;
         }
-        $configurations = $formatter->getConfigurations();
-        $newsTemplate = tx_rnbase_util_Templates::getSubpartFromFile($configurations->get($confId . '_template.path'), $configurations->get($confId . '_template.subpartName'));
 
-        $item = $this->loadNews($match->getProperty($fieldName), $newsExt);
+        if (!$pluginRendered) {
+            // Use marker template
+            $newsTemplate = tx_rnbase_util_Templates::getSubpartFromFile($configurations->get($confId . '_template.path'), $configurations->get($confId . '_template.subpartName'));
+            $item = $this->loadNews($match->getProperty($fieldName), $newsExt);
 
-        $newsReport = '';
-        if ($item) {
-            /* @var $marker tx_rnbase_util_SimpleMarker */
-            $marker = tx_rnbase::makeInstance('tx_rnbase_util_SimpleMarker');
-            $newsReport = $marker->parseTemplate($newsTemplate, $item, $formatter, $confId, 'NEWS');
+            $newsReport = '';
+            if ($item) {
+                /* @var $marker tx_rnbase_util_SimpleMarker */
+                $marker = tx_rnbase::makeInstance('tx_rnbase_util_SimpleMarker');
+                $newsReport = $marker->parseTemplate($newsTemplate, $item, $formatter, $confId, 'NEWS');
+            }
         }
+
         $markerArray = [
             '###' . $markerPrefix . '###' => $newsReport
         ];
@@ -86,11 +98,26 @@ class Tx_More4t3sports_Hook_MatchMarker
         return $template;
     }
 
+    protected function renderContent(\Sys25\RnBase\Configuration\ConfigurationInterface $configurations, int $contentUid, int $newsUid)
+    {
+        $ttContent = tx_rnbase_util_TYPO3::getSysPage()->checkRecord(
+            'tt_content',
+            $contentUid
+        );
+        $cObj = $configurations->getCObj('news');
+        // http://t3s87.local/index.php?id=62&tx_news_pi1%5Bnews%5D=1&tx_news_pi1%5Bcontroller%5D=News&tx_news_pi1%5Baction%5D=detail
+        // jetzt das contentelement parsen
+        $cObj->start($ttContent, 'tt_content');
+        $GLOBALS['TSFE']->register['T3SPORTS_NEWSUID'] = $newsUid;
+
+        $content = $cObj->cObjGetSingle('<tt_content', []);
+        return $content;
+    }
     /**
      *
      * @param int $uid
      * @param string $newsExt
-     * @return Ambigous <NULL, tx_rnbase_model_base>
+     * @return \tx_rnbase_model_base
      */
     protected function loadNews($uid, $newsExt)
     {
