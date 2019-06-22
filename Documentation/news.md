@@ -1,14 +1,23 @@
-#Integration von News-Extensions
+# Integration von News-Extensions
 **Die Erweiterung wurde mit freundlicher Unterstützung von [webfacemedia aus Limburg](https://www.webfacemedia.de/) umgesetzt.**
 
 Mit dieser Anbindung hat man die Möglichkeit **[tt_news](https://extensions.typo3.org/extension/tt_news/)** bzw. **[news](https://extensions.typo3.org/extension/news/)** für die Spiel- und Vorberichte zu nutzen. Nach der Installation findet man im Spiel-Datensatz beim Spielbericht zwei neue Felder für die Zuordnung der News-Records.
 
-#Integration von news
+## Integration von news
 
 Für die Ausgabe im Frontend muss das mitgelieferte Static Template **"T3sports with news"** installiert werden. Die Ausgabe erfolgt bei den Spielen über folgende Marker:
 
     ###MATCH_NEWSPREVIEW### und ###MATCH_NEWSREPORT###
 
+Für die Befüllung dieser beiden Marker stehen zwei Lösungen bereit:
+
+* Rendering über ein News-Plugin
+* Rendering per Marker-Templates
+
+###  Rendering per News-Plugin
+Bei diesem Weg richtet man auf einer versteckten Seite ein News-Plugin mit der Ausgabe **"Detail View"** ein. Nun die UID diese Content-Objekts in der Typoscript-Konstante **More4T3sports (news)/newsPluginUid** setzen.
+
+###  Rendering per Marker-Templates
 Die beiden Marker verwenden eigene Templates. Man kann hier im Prinzip den gesamten Newsbeitrag rausrendern, alternativ ist aber auch nur eine einfache Verlinkung auf den News-Beitrag möglich. Hier ein Beispiel-Template für einen Newsbericht:
 ```html
 ###NEWSREPORT###
@@ -46,7 +55,7 @@ lib.t3sports.news {
 Der Link auf die Detailseite der News verwendet automatisch die konfigurierte Konstante aus **news**.
 
 
-#Integration von tt_news
+## Integration von tt_news
 
 Für die Ausgabe im Frontend muss das mitgelieferte Static Template **"T3sports with tt_news"** installiert werden. Die Ausgabe erfolgt bei den Spielen über folgende Marker:
 
