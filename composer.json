@@ -25,9 +25,9 @@
 		"typo3-ter/more4t3sports" : "self.version"
 	},
 	"require" : {
-		"typo3/cms-core" : ">=6.2.0 <=8.7.99",
-		"digedag/rn-base" : ">=1.8.2",
-		"digedag/cfc-league-fe" : ">=1.2.0"
+		"typo3/cms-core": "^7.6 || ^8.7 || ^9.5",
+		"digedag/cfc-league" : "^1.4.0",
+		"digedag/rn-base" : "^1.11"
 	},
 	"autoload" : {
 		"classmap" : [
@@ -38,8 +38,8 @@
 			"tests/",
 			"util/"
 		],
-    "psr-4": {
-      "Sys25\\More4T3sports\\": "Classes"
-    }
+		"psr-4": {
+			"Sys25\\More4T3sports\\": "Classes"
+		}
 	}
 }
