@@ -48,7 +48,7 @@ if(tx_rnbase_util_TYPO3::isExtLoaded('t3socials')) {
 // -------------------------
 // ------- HOOKS -----------
 // -------------------------
-$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league_fe']['matchMarker_initRecord'][] = 'EXT:' . $_EXTKEY . '/Classes/Hook/MatchMarker.php:Tx_More4t3sports_Hook_MatchMarker->addNewsRecords';
+$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league_fe']['matchMarker_initRecord'][] = 'Tx_More4t3sports_Hook_MatchMarker->addNewsRecords';
 
 /** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher */
 $signalSlotDispatcher = \tx_rnbase::makeInstance(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
