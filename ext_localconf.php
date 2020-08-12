@@ -1,13 +1,9 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
-tx_rnbase::load('tx_rnbase_util_SearchBase');
-tx_rnbase::load('tx_rnbase_util_TYPO3');
-
 // -------------------------
 // ---- SERVICES -----------
 // -------------------------
-tx_rnbase::load('tx_more4t3sports_srv_Registry');
 if(tx_rnbase_util_TYPO3::isExtLoaded('t3socials')) {
 	tx_rnbase_util_Extensions::addService($_EXTKEY,  't3sports_srv' /* sv type */,  'tx_more4t3sports_srv_Socials' /* sv key */,
 		array(
