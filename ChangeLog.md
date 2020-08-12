@@ -1,5 +1,11 @@
 # Änderungen
 
+v0.5.2 (??.09.2020)
+ * Support TYPO3 9.5
+
+v0.5.1 (22.06.2019)
+ * render news records by news plugin
+
 v0.5.0 (11.07.2018)
  * Anbindung von news für Spiel- und Vorberichte
  * Support TYPO3 7.6 und 8.7
