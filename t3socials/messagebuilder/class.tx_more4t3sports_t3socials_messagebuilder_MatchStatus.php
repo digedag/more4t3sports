@@ -24,24 +24,23 @@
 tx_rnbase::load('tx_t3socials_trigger_IMessageBuilder');
 
 /**
- * Message Builder für Spielstatus
+ * Message Builder für Spielstatus.
  */
 class tx_more4t3sports_t3socials_messagebuilder_MatchStatus implements tx_t3socials_trigger_IMessageBuilder
 {
-
     public function buildGenericMessage(tx_t3socials_models_Base $model)
     {
         // Not used
     }
 
     /**
-     *
      * @param tx_cfcleague_models_Match $match
+     *
      * @return tx_t3socials_models_Message
      */
     public function buildGenericMatchStatusMessage($match, $trigger)
     {
-        if (! ($match->isRunning() || $match->isFinished())) {
+        if (!($match->isRunning() || $match->isFinished())) {
             return false;
         }
         /* @var $message tx_t3socials_models_Message */
@@ -49,9 +48,9 @@ class tx_more4t3sports_t3socials_messagebuilder_MatchStatus implements tx_t3soci
         $message->setData($match);
 
         // Spielstand
-        $prefix = $match->getHomeNameShort() . '-' . $match->getGuestNameShort();
+        $prefix = $match->getHomeNameShort().'-'.$match->getGuestNameShort();
         if ($match->getProperty('status') > 0) {
-            $prefix .= ' ' . $match->getGoalsHome() . ':' . $match->getGoalsGuest();
+            $prefix .= ' '.$match->getGoalsHome().':'.$match->getGoalsGuest();
         }
         // Paarung und Spielstand als Headline
         $message->setHeadline($prefix);
@@ -63,6 +62,7 @@ class tx_more4t3sports_t3socials_messagebuilder_MatchStatus implements tx_t3soci
             // Abpfiff
             $message->setIntro('Spielende');
         }
+
         return $message;
     }
 
@@ -73,12 +73,13 @@ class tx_more4t3sports_t3socials_messagebuilder_MatchStatus implements tx_t3soci
      *            tx_t3socials_models_IMessage &$message
      * @param tx_t3socials_models_Network $network
      * @param tx_t3socials_models_TriggerConfig $trigger
+     *
      * @return void
      */
     public function prepareMessageForNetwork(tx_t3socials_models_IMessage $message, tx_t3socials_models_Network $network, tx_t3socials_models_TriggerConfig $trigger)
     {
         // FIXME: flexibel gestalten
-        $url = $network->getConfigData($network->getNetwork() . '.liveticker.message.url');
+        $url = $network->getConfigData($network->getNetwork().'.liveticker.message.url');
         $message->setUrl($url);
     }
 }

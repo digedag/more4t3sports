@@ -22,52 +22,50 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+class tx_more4t3sports_hooks_TCEHook
+{
+    /**
+     * Wir müssen dafür sorgen, daß die neuen IDs der Teams im Wettbewerb und Spielen
+     * verwendet werden.
+     */
+    //	public function processDatamap_preProcessFieldArray(&$incomingFieldArray, $table, $id, &$tcemain)  {
+    //	}
 
-class tx_more4t3sports_hooks_TCEHook {
+    /**
+     * Nachbearbeitungen, unmittelbar BEVOR die Daten gespeichert werden. Das POST bezieht sich
+     * auf die Arbeit der TCE und nicht auf die Speicherung in der DB.
+     *
+     * @param string $status new oder update
+     * @param string $table Name der Tabelle
+     * @param int $id UID des Datensatzes
+     * @param array $fieldArray Felder des Datensatzes, die sich ändern
+     * @param tce_main $tcemain
+     */
+    //	public function processDatamap_postProcessFieldArray($status, $table, $id, &$fieldArray, &$tce) {
+    //	}
 
-	/**
-	 * Wir müssen dafür sorgen, daß die neuen IDs der Teams im Wettbewerb und Spielen
-	 * verwendet werden.
-	 */
-//	public function processDatamap_preProcessFieldArray(&$incomingFieldArray, $table, $id, &$tcemain)  {
-//	}
-
-	/**
-	 * Nachbearbeitungen, unmittelbar BEVOR die Daten gespeichert werden. Das POST bezieht sich
-	 * auf die Arbeit der TCE und nicht auf die Speicherung in der DB.
-	 *
-	 * @param string $status new oder update
-	 * @param string $table Name der Tabelle
-	 * @param int $id UID des Datensatzes
-	 * @param array $fieldArray Felder des Datensatzes, die sich ändern
-	 * @param tce_main $tcemain
-	 */
-//	public function processDatamap_postProcessFieldArray($status, $table, $id, &$fieldArray, &$tce) {
-//	}
-
-	/**
-	 * Nachbearbeitungen, unmittelbar NACHDEM die Daten gespeichert wurden.
-	 *
-	 * @param string $status new oder update
-	 * @param string $table Name der Tabelle
-	 * @param int $id UID des Datensatzes
-	 * @param array $fieldArray Felder des Datensatzes, die sich ändern
-	 * @param tce_main $tcemain
-	 */
-	public function processDatamap_afterDatabaseOperations($status, $table, $id, $fieldArray, &$tcemain) {
-		if($table == 'tx_cfcleague_match_notes' && $status=='new') {
-			// Nur wirklich aktuelle Tickermeldungen verbreiten
-			$id = $tcemain->substNEWwithIDs[$id];
-			$note = tx_rnbase::makeInstance('tx_cfcleague_models_MatchNote', $id);
-			tx_more4t3sports_srv_Registry::getSocialService()->sendLiveticker($note);
-		}
-		if($table == 'tx_cfcleague_games' && $status!='new') {
-			if(isset($fieldArray['status'])) {
-				$match = tx_rnbase::makeInstance('tx_cfcleague_models_Match', $id);
-				tx_more4t3sports_srv_Registry::getSocialService()->sendMatchStateChanged($match);
-			}
-		}
-	}
-
+    /**
+     * Nachbearbeitungen, unmittelbar NACHDEM die Daten gespeichert wurden.
+     *
+     * @param string $status new oder update
+     * @param string $table Name der Tabelle
+     * @param int $id UID des Datensatzes
+     * @param array $fieldArray Felder des Datensatzes, die sich ändern
+     * @param tce_main $tcemain
+     */
+    public function processDatamap_afterDatabaseOperations($status, $table, $id, $fieldArray, &$tcemain)
+    {
+        if ('tx_cfcleague_match_notes' == $table && 'new' == $status) {
+            // Nur wirklich aktuelle Tickermeldungen verbreiten
+            $id = $tcemain->substNEWwithIDs[$id];
+            $note = tx_rnbase::makeInstance('tx_cfcleague_models_MatchNote', $id);
+            tx_more4t3sports_srv_Registry::getSocialService()->sendLiveticker($note);
+        }
+        if ('tx_cfcleague_games' == $table && 'new' != $status) {
+            if (isset($fieldArray['status'])) {
+                $match = tx_rnbase::makeInstance('tx_cfcleague_models_Match', $id);
+                tx_more4t3sports_srv_Registry::getSocialService()->sendMatchStateChanged($match);
+            }
+        }
+    }
 }
-

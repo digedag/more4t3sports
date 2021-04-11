@@ -24,27 +24,26 @@
 tx_rnbase::load('tx_t3socials_trigger_IMessageBuilder');
 
 /**
- * Message Builder für Tickermeldungen von T3sports
+ * Message Builder für Tickermeldungen von T3sports.
  */
 class tx_more4t3sports_t3socials_ticker_MessageBuilder implements tx_t3socials_trigger_IMessageBuilder
 {
-
     public function buildGenericMessage(tx_t3socials_models_Base $model)
     {
         // Not used
     }
 
     /**
-     *
      * @param tx_cfcleague_models_Match $match
      * @param tx_cfcleague_models_MatchNote $ticker
+     *
      * @return tx_t3socials_models_IMessage
      */
     public function buildTickerMessage($match, $ticker)
     {
         // Alle Ticker laden
         tx_rnbase::load('tx_cfcleaguefe_util_MatchTicker');
-        $tickerArr = & tx_cfcleaguefe_util_MatchTicker::getTicker4Match($match);
+        $tickerArr = &tx_cfcleaguefe_util_MatchTicker::getTicker4Match($match);
         $tickerArr = array_reverse($tickerArr);
         $found = false;
         foreach ($tickerArr as $matchTicker) {
@@ -54,17 +53,18 @@ class tx_more4t3sports_t3socials_ticker_MessageBuilder implements tx_t3socials_t
                 break;
             }
         }
-        if (! $found) {
+        if (!$found) {
             return false;
         }
         $msg = $this->buildGenericMessage4Ticker($match, $ticker);
+
         return $msg;
     }
 
     /**
-     *
      * @param tx_cfcleague_models_Match $match
      * @param tx_cfcleague_models_MatchNote $ticker
+     *
      * @return tx_t3socials_models_Message
      */
     protected function buildGenericMessage4Ticker($match, $ticker)
@@ -73,17 +73,17 @@ class tx_more4t3sports_t3socials_ticker_MessageBuilder implements tx_t3socials_t
         $message->setData($ticker);
 
         // Spielstand
-        $prefix = $match->getHomeNameShort() . '-' . $match->getGuestNameShort();
+        $prefix = $match->getHomeNameShort().'-'.$match->getGuestNameShort();
         if ($match->getProperty('status') > 0 || $ticker->getMinute() > 0) {
             // Das Ergebnis aus dem Ticker lesen, da es aktueller ist
-            $prefix .= ' ' . $ticker->getProperty('goals_home') . ':' . $ticker->getProperty('goals_guest');
+            $prefix .= ' '.$ticker->getProperty('goals_home').':'.$ticker->getProperty('goals_guest');
             // $prefix .= ' ' . $match->getGoalsHome() .':' . $match->getGoalsGuest();
         }
         // Paarung und Spielstand als Headline
         $message->setHeadline($prefix);
 
         $player = $ticker->getPlayerInstance();
-        if (! (is_object($player) && $player->isValid())) {
+        if (!(is_object($player) && $player->isValid())) {
             $player = false;
         }
 
@@ -93,34 +93,34 @@ class tx_more4t3sports_t3socials_ticker_MessageBuilder implements tx_t3socials_t
             case 11:
             case 12:
             case 13:
-                if (! $player) {
+                if (!$player) {
                     return; // Tor ohne Spieler geht nicht
                 }
-                $msg .= 'Tor durch ' . $player->getName();
+                $msg .= 'Tor durch '.$player->getName();
                 break;
             case 30:
-                if (! $player) {
+                if (!$player) {
                     return; // Tor ohne Spieler geht nicht
                 }
-                $msg .= 'Eigentor durch ' . $player->getName();
+                $msg .= 'Eigentor durch '.$player->getName();
                 break;
             case 70:
-                if (! $player) {
+                if (!$player) {
                     return; // Tor ohne Spieler geht nicht
                 }
-                $msg .= 'Gelbe Karte für ' . $player->getName();
+                $msg .= 'Gelbe Karte für '.$player->getName();
                 break;
             case 71:
-                if (! $player) {
+                if (!$player) {
                     return; // Tor ohne Spieler geht nicht
                 }
-                $msg .= 'Gelb-Rot für ' . $player->getName();
+                $msg .= 'Gelb-Rot für '.$player->getName();
                 break;
             case 72:
-                if (! $player) {
+                if (!$player) {
                     return; // Tor ohne Spieler geht nicht
                 }
-                $msg .= 'Rote Karte für ' . $player->getName();
+                $msg .= 'Rote Karte für '.$player->getName();
                 break;
             // default:
             // $msg .= $player->getName();
@@ -134,8 +134,8 @@ class tx_more4t3sports_t3socials_ticker_MessageBuilder implements tx_t3socials_t
     }
 
     /**
-     *
      * @param tx_cfcleague_models_MatchNote $ticker
+     *
      * @return tx_cfcleague_models_Match
      */
     private function getLiveMatch4Ticker($ticker)
@@ -145,6 +145,7 @@ class tx_more4t3sports_t3socials_ticker_MessageBuilder implements tx_t3socials_t
         if ($match->getProperty('link_ticker')) {
             return $match;
         }
+
         return false;
     }
 
@@ -155,12 +156,13 @@ class tx_more4t3sports_t3socials_ticker_MessageBuilder implements tx_t3socials_t
      *            tx_t3socials_models_IMessage &$message
      * @param tx_t3socials_models_Network $network
      * @param tx_t3socials_models_TriggerConfig $trigger
+     *
      * @return void
      */
     public function prepareMessageForNetwork(tx_t3socials_models_IMessage $message, tx_t3socials_models_Network $network, tx_t3socials_models_TriggerConfig $trigger)
     {
         // FIXME: flexibel gestalten
-        $url = $network->getConfigData($network->getNetwork() . '.liveticker.message.url');
+        $url = $network->getConfigData($network->getNetwork().'.liveticker.message.url');
         $message->setUrl($url);
     }
 }

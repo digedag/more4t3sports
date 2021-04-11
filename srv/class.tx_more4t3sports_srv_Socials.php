@@ -26,15 +26,14 @@ tx_rnbase::load('tx_rnbase_util_DB');
 tx_rnbase::load('tx_rnbase_util_Logger');
 
 /**
- * Service for accessing network account information
+ * Service for accessing network account information.
  *
  * @author Rene Nitzsche
  */
 class tx_more4t3sports_srv_Socials extends Tx_Rnbase_Service_Base
 {
-
     /**
-     * Versenden eine Twittermeldung bei Aktualisierung des Tippspiels
+     * Versenden eine Twittermeldung bei Aktualisierung des Tippspiels.
      *
      * @param tx_t3sportsbet_models_Betgame $betgame
      * @param int $calculatedBets
@@ -43,8 +42,9 @@ class tx_more4t3sports_srv_Socials extends Tx_Rnbase_Service_Base
     {
         $trigger = 'betgameUpdated';
         $accounts = tx_t3socials_srv_ServiceRegistry::getNetworkService()->findAccounts($trigger);
-        if (empty($accounts))
+        if (empty($accounts)) {
             return;
+        }
 
         $builder = tx_rnbase::makeInstance('tx_more4t3sports_t3socials_betgame_MessageBuilder');
         // Die generische Message bauen
@@ -69,11 +69,11 @@ class tx_more4t3sports_srv_Socials extends Tx_Rnbase_Service_Base
     {
         // Zuerst das Spiel holen. Tickermeldungen nur von Spielen, die als Liveticker verlinkt sind
         $match = $this->getLiveMatch4Ticker($ticker);
-        if (! $match) {
+        if (!$match) {
             return; // Nix zu tun
         }
 
-        if (! $this->isTickerable($match, $ticker)) {
+        if (!$this->isTickerable($match, $ticker)) {
             return;
         }
 
@@ -98,15 +98,16 @@ class tx_more4t3sports_srv_Socials extends Tx_Rnbase_Service_Base
 
     private function isTickerable($match, $ticker)
     {
-        $ignoreTypes = array(
+        $ignoreTypes = [
             200,
             80,
             81,
-            31
-        );
+            31,
+        ];
         if (in_array($ticker->getType(), $ignoreTypes)) {
             return false;
         }
+
         return true;
 
         // tx_cfcleague_match_notes.type.ticker', '100');
@@ -126,8 +127,8 @@ class tx_more4t3sports_srv_Socials extends Tx_Rnbase_Service_Base
     }
 
     /**
-     *
      * @param tx_cfcleague_models_MatchNote $ticker
+     *
      * @return tx_cfcleague_models_Match
      */
     private function getLiveMatch4Ticker($ticker)
@@ -149,7 +150,7 @@ class tx_more4t3sports_srv_Socials extends Tx_Rnbase_Service_Base
     public function sendMatchStateChanged($match)
     {
         $trigger = 'matchstatus';
-        if (! ($match->getProperty('link_ticker'))) {
+        if (!($match->getProperty('link_ticker'))) {
             return;
         }
 
@@ -172,15 +173,14 @@ class tx_more4t3sports_srv_Socials extends Tx_Rnbase_Service_Base
 
     protected function logSuccessfulNotifications($states, $trigger)
     {
-        $infos = array();
+        $infos = [];
         foreach ($states as $status) {
             if ($status->isStateSuccess()) {
                 $infos[] = $status->getMessage();
             }
         }
-        if (! empty($infos)) {
-            tx_rnbase_util_Logger::warn('Notification for ' . $trigger . ' send!', 'more4t3sports', $infos);
+        if (!empty($infos)) {
+            tx_rnbase_util_Logger::warn('Notification for '.$trigger.' send!', 'more4t3sports', $infos);
         }
     }
 }
-

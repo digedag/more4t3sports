@@ -24,13 +24,12 @@
 tx_rnbase::load('tx_rnbase_util_Misc');
 
 /**
- * Access a service instance
+ * Access a service instance.
  */
 class tx_more4t3sports_srv_Registry
 {
-
     /**
-     * Liefert den Network-Service
+     * Liefert den Network-Service.
      *
      * @return tx_more4t3sports_srv_Socials
      */

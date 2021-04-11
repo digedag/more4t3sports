@@ -22,22 +22,23 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-
 tx_rnbase::load('tx_more4t3sports_util_PushdMessageBuilder');
 
-class tx_more4t3sports_tests_util_PushdMessageBuilder_testcase extends tx_phpunit_testcase {
-
-	function test_buildLiveTicker() {
-		// 43250 Tor
-		// 43287 Gelb
-		$note = tx_rnbase::makeInstance('tx_cfcleague_models_MatchNote', 43250);
-		tx_more4t3sports_srv_Registry::getSocialService()->sendLiveticker($note);
-
-	}
+class tx_more4t3sports_tests_util_PushdMessageBuilder_testcase extends tx_phpunit_testcase
+{
+    public function test_buildLiveTicker()
+    {
+        // 43250 Tor
+        // 43287 Gelb
+        $note = tx_rnbase::makeInstance('tx_cfcleague_models_MatchNote', 43250);
+        tx_more4t3sports_srv_Registry::getSocialService()->sendLiveticker($note);
+    }
 }
 
-class tx_more4t3sports_tests_util_PushdMessageBuilder extends tx_more4t3sports_util_PushdMessageBuilder {
-	public function buildTickerMessage($message, $account, $confId) {
-		return parent::buildTickerMessage($message, $account, $confId);
-	}
+class tx_more4t3sports_tests_util_PushdMessageBuilder extends tx_more4t3sports_util_PushdMessageBuilder
+{
+    public function buildTickerMessage($message, $account, $confId)
+    {
+        return parent::buildTickerMessage($message, $account, $confId);
+    }
 }

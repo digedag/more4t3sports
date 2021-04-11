@@ -22,16 +22,16 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-
-class tx_more4t3sports_hooks_T3sportsBet {
-
-	public function analyseBets($params, $parent) {
-
-		$calculatedBets = $params['calculatedBets'];
-		if(!$calculatedBets) return;
-		$betgame = $params['betgame'];
-		// Nachricht twittern
-		tx_more4t3sports_srv_Registry::getSocialService()->sendBetGameUpdated($betgame, $calculatedBets);
-	}
+class tx_more4t3sports_hooks_T3sportsBet
+{
+    public function analyseBets($params, $parent)
+    {
+        $calculatedBets = $params['calculatedBets'];
+        if (!$calculatedBets) {
+            return;
+        }
+        $betgame = $params['betgame'];
+        // Nachricht twittern
+        tx_more4t3sports_srv_Registry::getSocialService()->sendBetGameUpdated($betgame, $calculatedBets);
+    }
 }
-

@@ -24,11 +24,10 @@
 tx_rnbase::load('tx_t3socials_trigger_IMessageBuilder');
 
 /**
- * Message Builder für Tipspiel-Update von T3sportsbet
+ * Message Builder für Tipspiel-Update von T3sportsbet.
  */
 class tx_more4t3sports_t3socials_betgame_MessageBuilder implements tx_t3socials_trigger_IMessageBuilder
 {
-
     private $betgame;
 
     public function buildGenericMessage(tx_t3socials_models_Base $model)
@@ -41,12 +40,12 @@ class tx_more4t3sports_t3socials_betgame_MessageBuilder implements tx_t3socials_
         // Das wird nochmal für den Link benötigt
         $this->betgame = $betgame;
         /**
-         *
          * @var tx_t3socials_models_Message
          */
         $message = tx_rnbase::makeInstance('tx_t3socials_models_Message', 'betgameUpdated');
         $message->setHeadline('Tippspiel aktualisiert');
-        $message->setMessage('Es wurden insgesamt ' . $calculatedBets . ' Tipps ausgewertet.');
+        $message->setMessage('Es wurden insgesamt '.$calculatedBets.' Tipps ausgewertet.');
+
         return $message;
     }
 
@@ -57,6 +56,7 @@ class tx_more4t3sports_t3socials_betgame_MessageBuilder implements tx_t3socials_
      *            tx_t3socials_models_IMessage &$message
      * @param tx_t3socials_models_Network $network
      * @param tx_t3socials_models_TriggerConfig $trigger
+     *
      * @return void
      */
     public function prepareMessageForNetwork(tx_t3socials_models_IMessage $message, tx_t3socials_models_Network $network, tx_t3socials_models_TriggerConfig $trigger)
@@ -67,7 +67,7 @@ class tx_more4t3sports_t3socials_betgame_MessageBuilder implements tx_t3socials_
         tx_rnbase_util_Misc::prepareTSFE();
         $link = $config->createLink();
         $link->designatorString = 't3sportsbet'; // tx_ttnews[tt_news]
-        $link->initByTS($config, $network->getNetwork() . '.betgameUpdated.link.show.', array());
+        $link->initByTS($config, $network->getNetwork().'.betgameUpdated.link.show.', []);
         $url = $link->makeUrl(false);
         $message->setUrl($url);
     }

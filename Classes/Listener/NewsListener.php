@@ -1,6 +1,6 @@
 <?php
-namespace Sys25\More4T3sports\Listener;
 
+namespace Sys25\More4T3sports\Listener;
 
 /***************************************************************
 * Copyright notice
@@ -36,6 +36,7 @@ class NewsListener
     {
         if (!$newsItem && $newsUid = $GLOBALS['TSFE']->register['T3SPORTS_NEWSUID']) {
             $newsItem = $this->newsRepository->findByUid($newsUid);
+
             return [
                 'newsItem' => $newsItem,
                 'currentPage' => $currentPage,
@@ -47,7 +48,7 @@ class NewsListener
     }
 
     /**
-     * Inject a news repository to enable DI
+     * Inject a news repository to enable DI.
      *
      * @param \GeorgRinger\News\Domain\Repository\NewsRepository $newsRepository
      */

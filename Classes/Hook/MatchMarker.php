@@ -25,7 +25,6 @@
 
 class Tx_More4t3sports_Hook_MatchMarker
 {
-
     /**
      * Integrates output of preview and matchreport fields to matches.
      *
@@ -44,7 +43,6 @@ class Tx_More4t3sports_Hook_MatchMarker
     }
 
     /**
-     *
      * @param tx_cfcleague_models_Match $match
      * @param string $template
      * @param string $markerPrefix
@@ -53,9 +51,9 @@ class Tx_More4t3sports_Hook_MatchMarker
      */
     protected function addNews($match, $template, $markerPrefix, $confId, $formatter, $fieldName)
     {
-        $confId = $confId . $fieldName . '.';
-        $markerPrefix = $markerPrefix . '_' . strtoupper($fieldName);
-        if (! tx_rnbase_util_BaseMarker::containsMarker($template, $markerPrefix)) {
+        $confId = $confId.$fieldName.'.';
+        $markerPrefix = $markerPrefix.'_'.strtoupper($fieldName);
+        if (!tx_rnbase_util_BaseMarker::containsMarker($template, $markerPrefix)) {
             return $template;
         }
 
@@ -69,8 +67,7 @@ class Tx_More4t3sports_Hook_MatchMarker
                 $newsReport = $this->renderContent($configurations, $pluginUid, $match->getProperty($fieldName));
                 $pluginRendered = true;
             }
-        }
-        elseif (tx_rnbase_util_TYPO3::isExtLoaded('tt_news')) {
+        } elseif (tx_rnbase_util_TYPO3::isExtLoaded('tt_news')) {
             $newsExt = 'tt_news';
         }
         if (!$newsExt) {
@@ -79,7 +76,7 @@ class Tx_More4t3sports_Hook_MatchMarker
 
         if (!$pluginRendered) {
             // Use marker template
-            $newsTemplate = tx_rnbase_util_Templates::getSubpartFromFile($configurations->get($confId . '_template.path'), $configurations->get($confId . '_template.subpartName'));
+            $newsTemplate = tx_rnbase_util_Templates::getSubpartFromFile($configurations->get($confId.'_template.path'), $configurations->get($confId.'_template.subpartName'));
             $item = $this->loadNews($match->getProperty($fieldName), $newsExt);
 
             $newsReport = '';
@@ -91,13 +88,14 @@ class Tx_More4t3sports_Hook_MatchMarker
         }
 
         $markerArray = [
-            '###' . $markerPrefix . '###' => $newsReport
+            '###'.$markerPrefix.'###' => $newsReport,
         ];
         $template = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArray);
+
         return $template;
     }
 
-    protected function renderContent(\Sys25\RnBase\Configuration\ConfigurationInterface $configurations, int $contentUid, int $newsUid)
+    protected function renderContent(Sys25\RnBase\Configuration\ConfigurationInterface $configurations, int $contentUid, int $newsUid)
     {
         $ttContent = tx_rnbase_util_TYPO3::getSysPage()->checkRecord(
             'tt_content',
@@ -110,22 +108,25 @@ class Tx_More4t3sports_Hook_MatchMarker
         $GLOBALS['TSFE']->register['T3SPORTS_NEWSUID'] = $newsUid;
 
         $content = $cObj->cObjGetSingle('<tt_content', []);
+
         return $content;
     }
+
     /**
-     *
      * @param int $uid
      * @param string $newsExt
+     *
      * @return \tx_rnbase_model_base
      */
     protected function loadNews($uid, $newsExt)
     {
-        $table = $newsExt == 'news' ? 'tx_news_domain_model_news' : 'tt_news';
+        $table = 'news' == $newsExt ? 'tx_news_domain_model_news' : 'tt_news';
         $options = [
             'wrapperclass' => 'tx_rnbase_model_base',
-            'where' => 'uid = ' . $uid
+            'where' => 'uid = '.$uid,
         ];
         $items = Tx_Rnbase_Database_Connection::getInstance()->doSelect('*', $table, $options);
-        return empty($items) ? NULL : reset($items);
+
+        return empty($items) ? null : reset($items);
     }
 }
