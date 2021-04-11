@@ -1,0 +1,10 @@
+### travis builds
+/.Build
+/var
+/composer.lock
+.php_cs.cache
+
+.buildpath
+.project
+.settings
+

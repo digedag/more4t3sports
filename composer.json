@@ -26,8 +26,15 @@
 	},
 	"require" : {
 		"typo3/cms-core": "^7.6 || ^8.7 || ^9.5",
-		"digedag/cfc-league" : "^1.4.0",
-		"digedag/rn-base" : "^1.11"
+		"digedag/cfc-league" : "^1.7.0",
+		"digedag/rn-base" : "^1.13.5"
+	},
+	"require-dev": {
+		"namelesscoder/typo3-repository-client": "^1.2",
+		"nimut/testing-framework": "^1.1 || ^2.0 || ^4.0 || ^5.0",
+		"mikey179/vfsstream": "^1.4 || ^1.6",
+		"phpunit/phpunit": "^4.7|| ^7.0",
+		"friendsofphp/php-cs-fixer": "^2.15"
 	},
 	"autoload" : {
 		"classmap" : [
@@ -41,5 +48,35 @@
 		"psr-4": {
 			"Sys25\\More4T3sports\\": "Classes"
 		}
-	}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"System25\\T3sports\\Tests\\" : "Tests/Unit/PHP",
+			"TYPO3\\CMS\\Core\\Tests\\":".Build/vendor/typo3/cms/typo3/sysext/core/Tests/",
+			"TYPO3\\CMS\\Fluid\\Tests\\": ".Build/vendor/typo3/cms/typo3/sysext/fluid/Tests/"
+		}
+	},
+    "config": {
+        "vendor-dir": ".Build/vendor",
+        "bin-dir": ".Build/bin",
+        "preferred-install": {
+            "typo3/cms": "source"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "mkdir -p .Build/Web/typo3conf/ext/",
+            "[ -L .Build/Web/typo3conf/ext/more4t3sports ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/more4t3sports"
+        ]
+    },
+    "extra": {
+        "typo3/cms": {
+            "cms-package-dir": "{$vendor-dir}/typo3/cms",
+            "extension-key": "more4t3sports",
+            "web-dir": ".Build/Web"
+        },
+		"branch-alias": {
+			"dev-master": "1.x-dev"
+		}
+    }
 }

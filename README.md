@@ -1,7 +1,16 @@
 more4t3sports
 =============
 
-[![more4t3sports](ext_icon.gif)](https://github.com/digedag/more4t3sports)
+![TYPO3 compatibility](https://img.shields.io/badge/TYPO3-7.6%20%7C%208.7%20%7C%209.5-blue?maxAge=3600&style=flat-square&logo=typo3)
+<a href="https://github.com/digedag/more4t3sports"><img src="ext_icon.svg" width="20"></a>
+[![Latest Stable Version](https://img.shields.io/packagist/v/digedag/more4t3sports.svg?maxAge=3600)](https://packagist.org/packages/digedag/more4t3sports)
+[![Total Downloads](https://img.shields.io/packagist/dt/digedag/more4t3sports.svg?maxAge=3600)](https://packagist.org/packages/digedag/more4t3sports)
+[![Build Status](https://api.travis-ci.org/digedag/more4t3sports.png)](https://travis-ci.org/digedag/more4t3sports)
+[![Code Style](https://github.com/digedag/more4t3sports/actions/workflows/php.yaml/badge.svg)](https://github.com/digedag/more4t3sports/actions/workflows/php.yaml)
+<a href="https://twitter.com/intent/follow?screen_name=T3sports1">
+  <img src="https://img.shields.io/twitter/follow/T3sports1.svg?label=Follow%20@T3sports1" alt="Follow @T3sports1" />
+</a>
+
 
 What is this extension for?
 ---------------------------
