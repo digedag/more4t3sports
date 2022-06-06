@@ -21,11 +21,10 @@
 		"issues" : "https://github.com/digedag/more4t3sports/issues"
 	},
 	"replace" : {
-		"digedag/more4t3sports" : "self.version",
 		"typo3-ter/more4t3sports" : "self.version"
 	},
 	"require" : {
-		"typo3/cms-core": "^7.6 || ^8.7 || ^9.5",
+		"typo3/cms-core": "^8.7 || ^9.5 || ^10.4",
 		"digedag/cfc-league" : "^1.7.0",
 		"digedag/rn-base" : "^1.13.5"
 	},
