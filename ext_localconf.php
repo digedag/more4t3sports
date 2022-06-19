@@ -7,14 +7,14 @@ if (!defined('TYPO3_MODE')) {
 // -------------------------
 // ---- SERVICES -----------
 // -------------------------
-if (tx_rnbase_util_TYPO3::isExtLoaded('t3socials')) {
-    tx_rnbase_util_Extensions::addService($_EXTKEY, 't3sports_srv' /* sv type */ , 'tx_more4t3sports_srv_Socials' /* sv key */ ,
+if (Sys25\RnBase\Utility\TYPO3::isExtLoaded('t3socials')) {
+    Sys25\RnBase\Utility\Extensions::addService($_EXTKEY, 't3sports_srv' /* sv type */ , 'tx_more4t3sports_srv_Socials' /* sv key */ ,
         [
             'title' => 'Social networks', 'description' => 'Handles communications with social networks',
             'subtype' => 'socials',
             'available' => true, 'priority' => 50, 'quality' => 50,
             'os' => '', 'exec' => '',
-                'classFile' => tx_rnbase_util_Extensions::extPath($_EXTKEY).'srv/class.tx_more4t3sports_srv_Socials.php',
+            'classFile' => Sys25\RnBase\Utility\Extensions::extPath($_EXTKEY).'srv/class.tx_more4t3sports_srv_Socials.php',
             'className' => 'tx_more4t3sports_srv_Socials',
         ]
     );
@@ -47,7 +47,7 @@ if (tx_rnbase_util_TYPO3::isExtLoaded('t3socials')) {
 // -------------------------
 // ------- HOOKS -----------
 // -------------------------
-$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league_fe']['matchMarker_initRecord'][] = 'Tx_More4t3sports_Hook_MatchMarker->addNewsRecords';
+$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league_fe']['matchMarker_initRecord'][] = 'Sys25\More4T3sports\Hook\MatchMarkerHook->addNewsRecords';
 
 /** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher */
 $signalSlotDispatcher = \tx_rnbase::makeInstance(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
