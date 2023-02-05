@@ -112,7 +112,7 @@ class tx_more4t3sports_util_TwitterMessageBuilder
             return $text;
         }
         // Kürzen
-        $text = substr($text, 0, ($chars - strlen($afterstring)));
+        $text = substr($text, 0, $chars - strlen($afterstring));
         $trunc_at = strrpos($text, ' ');
         $text = ($trunc_at && $crop2space) ? substr($text, 0, $trunc_at).$afterstring : $text.$afterstring;
 
@@ -125,7 +125,7 @@ class tx_more4t3sports_util_TwitterMessageBuilder
             return $comment;
         }
         // Kürzen
-        $comment = substr($comment, 0, ($chars - strlen($afterstring)));
+        $comment = substr($comment, 0, $chars - strlen($afterstring));
         $trunc_at = strrpos($comment, ' ');
         $comment = ($trunc_at && $crop2space) ? substr($comment, 0, $trunc_at).$afterstring : $comment.$afterstring;
 

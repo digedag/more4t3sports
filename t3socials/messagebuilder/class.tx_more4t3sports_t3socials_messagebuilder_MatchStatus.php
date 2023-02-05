@@ -21,7 +21,6 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_t3socials_trigger_IMessageBuilder');
 
 /**
  * Message Builder für Spielstatus.
@@ -69,8 +68,7 @@ class tx_more4t3sports_t3socials_messagebuilder_MatchStatus implements tx_t3soci
     /**
      * Spezielle Netzwerk und Triggerabhängige Dinge durchführen.
      *
-     * @param
-     *            tx_t3socials_models_IMessage &$message
+     * @param tx_t3socials_models_IMessage &$message
      * @param tx_t3socials_models_Network $network
      * @param tx_t3socials_models_TriggerConfig $trigger
      *

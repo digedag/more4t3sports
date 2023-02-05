@@ -1,8 +1,13 @@
 <?php
+
+use System25\T3sports\Model\Match;
+use System25\T3sports\Model\MatchNote;
+use System25\T3sports\Utility\MatchTicker;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2014-2019 Rene Nitzsche <rene@system25.de>
+ *  (c) 2014-2023 Rene Nitzsche <rene@system25.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,7 +26,6 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_t3socials_trigger_IMessageBuilder');
 
 /**
  * Message Builder für Tickermeldungen von T3sports.
@@ -34,16 +38,16 @@ class tx_more4t3sports_t3socials_ticker_MessageBuilder implements tx_t3socials_t
     }
 
     /**
-     * @param tx_cfcleague_models_Match $match
-     * @param tx_cfcleague_models_MatchNote $ticker
+     * @param Match $match
+     * @param MatchNote $ticker
      *
      * @return tx_t3socials_models_IMessage
      */
     public function buildTickerMessage($match, $ticker)
     {
         // Alle Ticker laden
-        tx_rnbase::load('tx_cfcleaguefe_util_MatchTicker');
-        $tickerArr = &tx_cfcleaguefe_util_MatchTicker::getTicker4Match($match);
+        $matchTicker = new MatchTicker();
+        $tickerArr = $matchTicker->getTicker4Match($match);
         $tickerArr = array_reverse($tickerArr);
         $found = false;
         foreach ($tickerArr as $matchTicker) {
@@ -62,8 +66,8 @@ class tx_more4t3sports_t3socials_ticker_MessageBuilder implements tx_t3socials_t
     }
 
     /**
-     * @param tx_cfcleague_models_Match $match
-     * @param tx_cfcleague_models_MatchNote $ticker
+     * @param Match $match
+     * @param MatchNote $ticker
      *
      * @return tx_t3socials_models_Message
      */
@@ -134,26 +138,9 @@ class tx_more4t3sports_t3socials_ticker_MessageBuilder implements tx_t3socials_t
     }
 
     /**
-     * @param tx_cfcleague_models_MatchNote $ticker
-     *
-     * @return tx_cfcleague_models_Match
-     */
-    private function getLiveMatch4Ticker($ticker)
-    {
-        // TODO: Auf basis model umstellen. Ticker fehlen noch
-        $match = tx_rnbase::makeInstance('tx_cfcleaguefe_models_match', $ticker->getGame());
-        if ($match->getProperty('link_ticker')) {
-            return $match;
-        }
-
-        return false;
-    }
-
-    /**
      * Spezielle Netzwerk und Triggerabhängige Dinge durchführen.
      *
-     * @param
-     *            tx_t3socials_models_IMessage &$message
+     * @param tx_t3socials_models_IMessage $message
      * @param tx_t3socials_models_Network $network
      * @param tx_t3socials_models_TriggerConfig $trigger
      *

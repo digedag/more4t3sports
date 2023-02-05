@@ -150,7 +150,7 @@ class tx_more4t3sports_srv_Socials extends Tx_Rnbase_Service_Base
     public function sendMatchStateChanged($match)
     {
         $trigger = 'matchstatus';
-        if (!($match->getProperty('link_ticker'))) {
+        if (!$match->getProperty('link_ticker')) {
             return;
         }
 

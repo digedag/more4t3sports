@@ -26,13 +26,13 @@ if (Sys25\RnBase\Utility\TYPO3::isExtLoaded('t3socials')) {
     // Diese Trigger registrieren, damit sie im TCE-Formular auswählbar sind.
     // Diese Events werden nicht über den Autosend von T3socials ausgeführt.
     tx_t3socials_trigger_Config::registerTrigger(
-    tx_rnbase::makeInstance('tx_t3socials_models_TriggerConfig', ['trigger_id' => 'matchstatus'])
+        tx_rnbase::makeInstance('tx_t3socials_models_TriggerConfig', ['trigger_id' => 'matchstatus'])
     );
     tx_t3socials_trigger_Config::registerTrigger(
-    tx_rnbase::makeInstance('tx_t3socials_models_TriggerConfig', ['trigger_id' => 'betgameUpdated'])
+        tx_rnbase::makeInstance('tx_t3socials_models_TriggerConfig', ['trigger_id' => 'betgameUpdated'])
     );
     tx_t3socials_trigger_Config::registerTrigger(
-    tx_rnbase::makeInstance('tx_t3socials_models_TriggerConfig', ['trigger_id' => 'liveticker'])
+        tx_rnbase::makeInstance('tx_t3socials_models_TriggerConfig', ['trigger_id' => 'liveticker'])
     );
 
     // -------------------------
