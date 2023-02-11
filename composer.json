@@ -60,10 +60,16 @@
         "bin-dir": ".Build/bin",
         "preferred-install": {
             "typo3/cms": "source"
+        },
+        "allow-plugins": {
+            "typo3/class-alias-loader": true,
+            "typo3/cms-composer-installers": true,
+            "phpstan/extension-installer": true
         }
     },
     "scripts": {
-		"test:phpcompat": ".Build/bin/phpcs --ignore=.Build/*,Resources/* -p . --standard=.Build/vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion ",
+        "test:phplint": "find *.php Classes Configuration hooks t3socials srv tests util -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l",
+        "test:phpcompat": ".Build/bin/phpcs --ignore=.Build/*,Resources/* -p . --standard=.Build/vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion ",
         "post-autoload-dump": [
             "mkdir -p .Build/Web/typo3conf/ext/",
             "[ -L .Build/Web/typo3conf/ext/more4t3sports ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/more4t3sports"
@@ -76,7 +82,7 @@
             "web-dir": ".Build/Web"
         },
 		"branch-alias": {
-			"dev-master": "1.x-dev"
+			"dev-master": "0.x-dev"
 		}
     }
 }
