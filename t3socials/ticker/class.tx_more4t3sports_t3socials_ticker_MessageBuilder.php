@@ -1,6 +1,6 @@
 <?php
 
-use System25\T3sports\Model\Match;
+use System25\T3sports\Model\Fixture;
 use System25\T3sports\Model\MatchNote;
 use System25\T3sports\Utility\MatchTicker;
 
@@ -38,7 +38,7 @@ class tx_more4t3sports_t3socials_ticker_MessageBuilder implements tx_t3socials_t
     }
 
     /**
-     * @param Match $match
+     * @param Fixture $match
      * @param MatchNote $ticker
      *
      * @return tx_t3socials_models_IMessage
@@ -66,7 +66,7 @@ class tx_more4t3sports_t3socials_ticker_MessageBuilder implements tx_t3socials_t
     }
 
     /**
-     * @param Match $match
+     * @param Fixture $match
      * @param MatchNote $ticker
      *
      * @return tx_t3socials_models_Message

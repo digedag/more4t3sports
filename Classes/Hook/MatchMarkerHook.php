@@ -11,13 +11,13 @@ use Sys25\RnBase\Frontend\Marker\SimpleMarker;
 use Sys25\RnBase\Frontend\Marker\Templates;
 use Sys25\RnBase\Utility\TYPO3;
 use System25\T3sports\Frontend\Marker\MatchMarker;
-use System25\T3sports\Model\Match;
+use System25\T3sports\Model\Fixture;
 use tx_rnbase;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2015-2022 Rene Nitzsche (rene@system25.de)
+ *  (c) 2015-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -57,7 +57,7 @@ class MatchMarkerHook
     }
 
     /**
-     * @param Match $match
+     * @param Fixture $match
      * @param string $template
      * @param string $markerPrefix
      * @param string $confId
@@ -95,7 +95,6 @@ class MatchMarkerHook
 
             $newsReport = '';
             if ($item) {
-                /* @var $marker SimpleMarker */
                 $marker = tx_rnbase::makeInstance(SimpleMarker::class);
                 $newsReport = $marker->parseTemplate($newsTemplate, $item, $formatter, $confId, 'NEWS');
             }

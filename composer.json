@@ -24,16 +24,16 @@
 		"typo3-ter/more4t3sports" : "self.version"
 	},
 	"require" : {
-		"typo3/cms-core": "^8.7 || ^9.5 || ^10.4",
-		"digedag/cfc-league" : "^1.8.0",
-		"digedag/rn-base" : "^1.13.5"
+		"typo3/cms-core": "^8.7 || ^9.5 || ^10.4 || ^11.5",
+		"digedag/cfc-league" : "^1.10.0",
+		"digedag/rn-base" : "^1.16.0"
 	},
 	"require-dev": {
-		"namelesscoder/typo3-repository-client": "^1.2",
-		"nimut/testing-framework": "^1.1 || ^2.0 || ^4.0 || ^5.0",
+		"friendsofphp/php-cs-fixer": "^3.1.0",
 		"mikey179/vfsstream": "^1.4 || ^1.6",
-		"phpunit/phpunit": "^4.7|| ^7.0",
-		"friendsofphp/php-cs-fixer": "^3.1.0"
+		"nimut/testing-framework": "^4.0 || ^5.0 || ^6.0",
+		"phpcompatibility/php-compatibility": "^9.3.5",
+		"phpunit/phpunit": "^6.5.14 || ^7.5.20 || ^8.0"
 	},
 	"autoload" : {
 		"classmap" : [
@@ -63,6 +63,7 @@
         }
     },
     "scripts": {
+		"test:phpcompat": ".Build/bin/phpcs --ignore=.Build/*,Resources/* -p . --standard=.Build/vendor/phpcompatibility/php-compatibility/PHPCompatibility --runtime-set testVersion ",
         "post-autoload-dump": [
             "mkdir -p .Build/Web/typo3conf/ext/",
             "[ -L .Build/Web/typo3conf/ext/more4t3sports ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/more4t3sports"
