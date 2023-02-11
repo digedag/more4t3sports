@@ -14,7 +14,7 @@ $tableName = tx_rnbase_util_TYPO3::isExtLoaded('news') ? 'tx_news_domain_model_n
 $columns = [
     'newspreview' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:more4t3sports/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games_newspreview',
+            'label' => 'LLL:EXT:more4t3sports/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games_newspreview',
             'config' => [
                     'type' => 'group',
                     'internal_type' => 'db',
@@ -26,7 +26,7 @@ $columns = [
     ],
     'newsreport' => [
             'exclude' => 1,
-            'label' => 'LLL:EXT:more4t3sports/Resources/Private/Language/locallang_db.xml:tx_cfcleague_games_newsreport',
+            'label' => 'LLL:EXT:more4t3sports/Resources/Private/Language/locallang_db.xlf:tx_cfcleague_games_newsreport',
             'config' => [
                     'type' => 'group',
                     'internal_type' => 'db',

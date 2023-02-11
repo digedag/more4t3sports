@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" data="2023-02-11T22-04-49" product-name="zsb">
+		<header/>
+		<body>
+			<trans-unit id="tx_cfcleague_games_newspreview" xml:space="preserve">
+				<source>Match preview</source>
+			</trans-unit>
+			<trans-unit id="tx_cfcleague_games_newsreport" xml:space="preserve">
+				<source>Match report</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
