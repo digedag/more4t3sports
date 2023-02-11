@@ -5,7 +5,7 @@ more4t3sports
 <a href="https://github.com/digedag/more4t3sports"><img src="ext_icon.svg" width="20"></a>
 [![Latest Stable Version](https://img.shields.io/packagist/v/digedag/more4t3sports.svg?maxAge=3600)](https://packagist.org/packages/digedag/more4t3sports)
 [![Total Downloads](https://img.shields.io/packagist/dt/digedag/more4t3sports.svg?maxAge=3600)](https://packagist.org/packages/digedag/more4t3sports)
-[![Code Style](https://github.com/digedag/more4t3sports/actions/workflows/php.yaml/badge.svg)](https://github.com/digedag/more4t3sports/actions/workflows/php.yaml)
+[![Code Style](https://github.com/digedag/more4t3sports/actions/workflows/php.yaml/badge.svg?maxAge=3600)](https://github.com/digedag/more4t3sports/actions/workflows/php.yaml)
 <a href="https://twitter.com/intent/follow?screen_name=T3sports1">
   <img src="https://img.shields.io/twitter/follow/T3sports1.svg?label=Follow%20@T3sports1" alt="Follow @T3sports1" />
 </a>
