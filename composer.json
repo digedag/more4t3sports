@@ -60,6 +60,11 @@
         "bin-dir": ".Build/bin",
         "preferred-install": {
             "typo3/cms": "source"
+        },
+        "allow-plugins": {
+            "typo3/class-alias-loader": true,
+            "typo3/cms-composer-installers": true,
+            "phpstan/extension-installer": true
         }
     },
     "scripts": {
@@ -77,7 +82,7 @@
             "web-dir": ".Build/Web"
         },
 		"branch-alias": {
-			"dev-master": "1.x-dev"
+			"dev-master": "0.x-dev"
 		}
     }
 }
