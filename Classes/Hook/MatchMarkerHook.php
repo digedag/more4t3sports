@@ -114,10 +114,12 @@ class MatchMarkerHook
             'tt_content',
             $contentUid
         );
+
         $cObj = $configurations->getCObj('news');
         // http://t3s87.local/index.php?id=62&tx_news_pi1%5Bnews%5D=1&tx_news_pi1%5Bcontroller%5D=News&tx_news_pi1%5Baction%5D=detail
         // jetzt das contentelement parsen
         $cObj->start($ttContent, 'tt_content');
+        // Wird vom Listener abgegriffen
         $GLOBALS['TSFE']->register['T3SPORTS_NEWSUID'] = $newsUid;
 
         $content = $cObj->cObjGetSingle('<tt_content', []);

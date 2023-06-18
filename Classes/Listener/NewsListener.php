@@ -32,6 +32,19 @@ class NewsListener
      */
     protected $newsRepository;
 
+    public function handleNewsDetail(\GeorgRinger\News\Event\NewsDetailActionEvent $event)
+    {
+        $values = $event->getAssignedValues();
+        $newsItem = $values['newsItem'];
+
+        if (!$newsItem && $newsUid = $GLOBALS['TSFE']->register['T3SPORTS_NEWSUID']) {
+            $newsItem = $this->newsRepository->findByUid($newsUid);
+            $values['newsItem'] = $newsItem;
+        }
+
+        $event->setAssignedValues($values);
+    }
+
     public function lookupNewsRecord($newsItem, $currentPage, $demand, $settings)
     {
         if (!$newsItem && $newsUid = $GLOBALS['TSFE']->register['T3SPORTS_NEWSUID']) {

@@ -22,7 +22,6 @@ if (Sys25\RnBase\Utility\TYPO3::isExtLoaded('t3socials')) {
     // *** **************** *** *
     // *** Register Trigger *** *
     // *** **************** *** *
-    tx_rnbase::load('tx_t3socials_trigger_Config');
     // Diese Trigger registrieren, damit sie im TCE-Formular auswählbar sind.
     // Diese Events werden nicht über den Autosend von T3socials ausgeführt.
     tx_t3socials_trigger_Config::registerTrigger(
@@ -49,9 +48,11 @@ if (Sys25\RnBase\Utility\TYPO3::isExtLoaded('t3socials')) {
 // -------------------------
 $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league_fe']['matchMarker_initRecord'][] = 'Sys25\More4T3sports\Hook\MatchMarkerHook->addNewsRecords';
 
-/** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher */
-$signalSlotDispatcher = \tx_rnbase::makeInstance(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
-$signalSlotDispatcher->connect(
-    'GeorgRinger\News\Controller\NewsController', 'detailAction',
-    \Sys25\More4T3sports\Listener\NewsListener::class, 'lookupNewsRecord'
-);
+if (!Sys25\RnBase\Utility\TYPO3::isTYPO115OrHigher() && Sys25\RnBase\Utility\TYPO3::isExtLoaded('news')) {
+    /** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher */
+    $signalSlotDispatcher = \tx_rnbase::makeInstance(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
+    $signalSlotDispatcher->connect(
+        'GeorgRinger\News\Controller\NewsController', 'detailAction',
+        \Sys25\More4T3sports\Listener\NewsListener::class, 'lookupNewsRecord'
+    );
+}

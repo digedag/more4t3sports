@@ -1,0 +1,12 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Sys25\More4T3sports\Listener\NewsListener:
+    tags:
+      - name: event.listener
+        identifier: 'more4t3sports-news-detail'
+        method: 'handleNewsDetail'
+        event: GeorgRinger\News\Event\NewsDetailActionEvent
