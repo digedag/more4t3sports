@@ -7,9 +7,9 @@ if (!(defined('TYPO3') || defined('TYPO3_MODE'))) {
 call_user_func(function () {
     $extKey = 'more4t3sports';
 
-    if (tx_rnbase_util_TYPO3::isExtLoaded('news')) {
-        tx_rnbase_util_Extensions::addStaticFile($extKey, 'Configuration/Typoscript/news/', 'T3sports with news');
-    } elseif (tx_rnbase_util_TYPO3::isExtLoaded('tt_news')) {
-        tx_rnbase_util_Extensions::addStaticFile($extKey, 'Configuration/Typoscript/tt_news/', 'T3sports with tt_news');
+    if (Sys25\RnBase\Utility\Extensions::isLoaded('news')) {
+        Sys25\RnBase\Utility\Extensions::addStaticFile($extKey, 'Configuration/Typoscript/news/', 'T3sports with news');
+    } elseif (Sys25\RnBase\Utility\Extensions::isLoaded('tt_news')) {
+        Sys25\RnBase\Utility\Extensions::addStaticFile($extKey, 'Configuration/Typoscript/tt_news/', 'T3sports with tt_news');
     }
 });
