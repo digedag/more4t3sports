@@ -4,7 +4,7 @@ if (!(defined('TYPO3') || defined('TYPO3_MODE'))) {
     exit('Access denied.');
 }
 
-if (!Sys25\RnBase\Utility\Extensions::isExtLoaded('tt_news') && !tx_rnbase_util_TYPO3::isExtLoaded('news')) {
+if (!Sys25\RnBase\Utility\Extensions::isLoaded('tt_news') && !tx_rnbase_util_TYPO3::isExtLoaded('news')) {
     return;
 }
 
