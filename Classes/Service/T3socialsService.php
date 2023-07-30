@@ -1,8 +1,21 @@
 <?php
+
+namespace Sys25\More4T3sports\Service;
+
+use Sys25\More4T3sports\T3socials\MessageBuilder\BetgameMessageBuilder;
+use Sys25\More4T3sports\T3socials\MessageBuilder\MatchStatusMessageBuilder;
+use Sys25\More4T3sports\T3socials\MessageBuilder\MatchTickerMessageBuilder;
+use Sys25\RnBase\Utility\Logger;
+use System25\T3sports\Model\Fixture;
+use tx_rnbase;
+use tx_t3socials_srv_ServiceRegistry;
+use tx_t3socials_trigger_Config;
+use tx_t3sportsbet_models_Betgame;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013-2018 Rene Nitzsche (rene@system25.de)
+ *  (c) 2013-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,16 +34,13 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('Tx_Rnbase_Service_Base');
-tx_rnbase::load('tx_rnbase_util_DB');
-tx_rnbase::load('tx_rnbase_util_Logger');
 
 /**
  * Service for accessing network account information.
  *
  * @author Rene Nitzsche
  */
-class tx_more4t3sports_srv_Socials extends Tx_Rnbase_Service_Base
+class T3socialsService
 {
     /**
      * Versenden eine Twittermeldung bei Aktualisierung des Tippspiels.
@@ -46,10 +56,10 @@ class tx_more4t3sports_srv_Socials extends Tx_Rnbase_Service_Base
             return;
         }
 
-        $builder = tx_rnbase::makeInstance('tx_more4t3sports_t3socials_betgame_MessageBuilder');
+        /** @var BetgameMessageBuilder $builder */
+        $builder = tx_rnbase::makeInstance(BetgameMessageBuilder::class);
         // Die generische Message bauen
         $message = $builder->buildGenericBetGameUpdated($betgame, $calculatedBets);
-        tx_rnbase::load('tx_t3socials_trigger_Config');
         /* @var tx_t3socials_models_TriggerConfig $triggerConfig */
         $triggerConfig = tx_t3socials_trigger_Config::getTriggerConfig($trigger);
 
@@ -63,7 +73,7 @@ class tx_more4t3sports_srv_Socials extends Tx_Rnbase_Service_Base
      * - Es muss ein Livetickerspiel sein
      * Die Implementierung ist derzeit fest auf Twitter ausgelegt.
      *
-     * @param tx_cfcleague_models_MatchNote $ticker
+     * @param \System25\T3sports\Model\MatchNote $ticker
      */
     public function sendLiveTicker($ticker)
     {
@@ -83,7 +93,7 @@ class tx_more4t3sports_srv_Socials extends Tx_Rnbase_Service_Base
             return;
         }
 
-        $builder = tx_rnbase::makeInstance('tx_more4t3sports_t3socials_ticker_MessageBuilder');
+        $builder = tx_rnbase::makeInstance(MatchTickerMessageBuilder::class);
         // Die generische Message bauen
         $message = $builder->buildTickerMessage($match, $ticker);
 
@@ -127,14 +137,15 @@ class tx_more4t3sports_srv_Socials extends Tx_Rnbase_Service_Base
     }
 
     /**
-     * @param tx_cfcleague_models_MatchNote $ticker
+     * @param \System25\T3sports\Model\MatchNote $ticker
      *
-     * @return tx_cfcleague_models_Match
+     * @return Fixture|bool
      */
     private function getLiveMatch4Ticker($ticker)
     {
         // TODO: Auf basis model umstellen. Ticker fehlen noch
-        $match = tx_rnbase::makeInstance('tx_cfcleaguefe_models_match', $ticker->getGame());
+        /** @var Fixture $match */
+        $match = tx_rnbase::makeInstance(Fixture::class, $ticker->getGame());
         if ($match->getProperty('link_ticker')) {
             return $match;
         }
@@ -145,7 +156,7 @@ class tx_more4t3sports_srv_Socials extends Tx_Rnbase_Service_Base
     /**
      * Versand einer Nachricht, mit dem aktuellen Spielstatus.
      *
-     * @param tx_cfcleague_models_Match $match
+     * @param Fixture $match
      */
     public function sendMatchStateChanged($match)
     {
@@ -159,11 +170,11 @@ class tx_more4t3sports_srv_Socials extends Tx_Rnbase_Service_Base
             return;
         }
 
-        $builder = tx_rnbase::makeInstance('tx_more4t3sports_t3socials_messagebuilder_MatchStatus');
+        /** @var MatchStatusMessageBuilder $builder */
+        $builder = tx_rnbase::makeInstance(MatchStatusMessageBuilder::class);
         $message = $builder->buildGenericMatchStatusMessage($match, $trigger);
 
         if ($message) {
-            tx_rnbase::load('tx_t3socials_trigger_Config');
             /* @var tx_t3socials_models_TriggerConfig $triggerConfig */
             $triggerConfig = tx_t3socials_trigger_Config::getTriggerConfig($trigger);
             $states = tx_t3socials_srv_ServiceRegistry::getNetworkService()->sendMessage($message, $accounts, $builder, $triggerConfig);
@@ -180,7 +191,7 @@ class tx_more4t3sports_srv_Socials extends Tx_Rnbase_Service_Base
             }
         }
         if (!empty($infos)) {
-            tx_rnbase_util_Logger::warn('Notification for '.$trigger.' send!', 'more4t3sports', $infos);
+            Logger::warn('Notification for '.$trigger.' send!', 'more4t3sports', $infos);
         }
     }
 }

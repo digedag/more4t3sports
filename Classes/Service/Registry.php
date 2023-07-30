@@ -1,8 +1,13 @@
 <?php
+
+namespace Sys25\More4T3sports\Service;
+
+use tx_rnbase;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2012-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,23 +27,36 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-tx_rnbase::load('tx_more4t3sports_util_PushdMessageBuilder');
-
-class tx_more4t3sports_tests_util_PushdMessageBuilder_testcase extends tx_phpunit_testcase
+/**
+ * Access a service instance.
+ *
+ * @deprecated use DI
+ */
+class Registry
 {
-    public function test_buildLiveTicker()
-    {
-        // 43250 Tor
-        // 43287 Gelb
-        $note = tx_rnbase::makeInstance('tx_cfcleague_models_MatchNote', 43250);
-        tx_more4t3sports_srv_Registry::getSocialService()->sendLiveticker($note);
+    private $socialsService = null;
+
+    public function __construct(
+        T3socialsService $socialsService = null
+    ) {
+        $this->socialsService = $socialsService ?: new T3socialsService();
     }
-}
 
-class tx_more4t3sports_tests_util_PushdMessageBuilder extends tx_more4t3sports_util_PushdMessageBuilder
-{
-    public function buildTickerMessage($message, $account, $confId)
+    /**
+     * @return self
+     */
+    private static function getInstance()
     {
-        return parent::buildTickerMessage($message, $account, $confId);
+        return tx_rnbase::makeInstance(ServiceRegistry::class);
+    }
+
+    /**
+     * Liefert den Network-Service.
+     *
+     * @return T3socialsService
+     */
+    public static function getSocialService()
+    {
+        return self::getInstance()->socialsService;
     }
 }

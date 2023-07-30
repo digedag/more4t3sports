@@ -131,7 +131,7 @@ class MatchMarkerHook
      * @param int $uid
      * @param string $newsExt
      *
-     * @return \tx_rnbase_model_base
+     * @return BaseModel|null
      */
     protected function loadNews($uid, $newsExt)
     {

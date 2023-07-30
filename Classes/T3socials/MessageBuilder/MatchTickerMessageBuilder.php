@@ -1,8 +1,17 @@
 <?php
 
+namespace Sys25\More4T3sports\T3socials\MessageBuilder;
+
 use System25\T3sports\Model\Fixture;
 use System25\T3sports\Model\MatchNote;
 use System25\T3sports\Utility\MatchTicker;
+use tx_rnbase;
+use tx_t3socials_models_Base;
+use tx_t3socials_models_IMessage;
+use tx_t3socials_models_Message;
+use tx_t3socials_models_Network;
+use tx_t3socials_models_TriggerConfig;
+use tx_t3socials_trigger_IMessageBuilder;
 
 /***************************************************************
  *  Copyright notice
@@ -30,7 +39,7 @@ use System25\T3sports\Utility\MatchTicker;
 /**
  * Message Builder für Tickermeldungen von T3sports.
  */
-class tx_more4t3sports_t3socials_ticker_MessageBuilder implements tx_t3socials_trigger_IMessageBuilder
+class MatchTickerMessageBuilder implements tx_t3socials_trigger_IMessageBuilder
 {
     public function buildGenericMessage(tx_t3socials_models_Base $model)
     {
@@ -73,6 +82,7 @@ class tx_more4t3sports_t3socials_ticker_MessageBuilder implements tx_t3socials_t
      */
     protected function buildGenericMessage4Ticker($match, $ticker)
     {
+        /** @var tx_t3socials_models_Message $message */
         $message = tx_rnbase::makeInstance('tx_t3socials_models_Message', 'liveticker');
         $message->setData($ticker);
 

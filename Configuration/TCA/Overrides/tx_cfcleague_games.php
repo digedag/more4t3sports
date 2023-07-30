@@ -1,16 +1,14 @@
 <?php
 
-if (!defined('TYPO3_MODE')) {
+if (!(defined('TYPO3') || defined('TYPO3_MODE'))) {
     exit('Access denied.');
 }
 
-tx_rnbase::load('tx_rnbase_util_Extensions');
-tx_rnbase::load('tx_rnbase_util_TYPO3');
-if (!tx_rnbase_util_TYPO3::isExtLoaded('tt_news') && !tx_rnbase_util_TYPO3::isExtLoaded('news')) {
+if (!Sys25\RnBase\Utility\Extensions::isLoaded('tt_news') && !tx_rnbase_util_TYPO3::isExtLoaded('news')) {
     return;
 }
 
-$tableName = tx_rnbase_util_TYPO3::isExtLoaded('news') ? 'tx_news_domain_model_news' : 'tt_news';
+$tableName = Sys25\RnBase\Utility\Extensions::isLoaded('news') ? 'tx_news_domain_model_news' : 'tt_news';
 $columns = [
     'newspreview' => [
             'exclude' => 1,
@@ -38,5 +36,5 @@ $columns = [
     ],
 ];
 
-tx_rnbase_util_Extensions::addTCAcolumns('tx_cfcleague_games', $columns, 1);
-tx_rnbase_util_Extensions::addToAllTCAtypes('tx_cfcleague_games', 'newspreview, newsreport', '', 'after:game_report_author');
+Sys25\RnBase\Utility\Extensions::addTCAcolumns('tx_cfcleague_games', $columns, 1);
+Sys25\RnBase\Utility\Extensions::addToAllTCAtypes('tx_cfcleague_games', 'newspreview, newsreport', '', 'after:game_report_author');
