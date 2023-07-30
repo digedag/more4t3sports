@@ -1,8 +1,19 @@
 <?php
+
+namespace Sys25\More4T3sports\T3socials\MessageBuilder;
+
+use tx_rnbase;
+use tx_t3socials_models_Base;
+use tx_t3socials_models_IMessage;
+use tx_t3socials_models_Message;
+use tx_t3socials_models_Network;
+use tx_t3socials_models_TriggerConfig;
+use tx_t3socials_trigger_IMessageBuilder;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2015-2018 Rene Nitzsche <rene@system25.de>
+ *  (c) 2015-2023 Rene Nitzsche <rene@system25.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,7 +36,7 @@
 /**
  * Message Builder für Spielstatus.
  */
-class tx_more4t3sports_t3socials_messagebuilder_MatchStatus implements tx_t3socials_trigger_IMessageBuilder
+class MatchStatusMessageBuilder implements tx_t3socials_trigger_IMessageBuilder
 {
     public function buildGenericMessage(tx_t3socials_models_Base $model)
     {
@@ -33,16 +44,16 @@ class tx_more4t3sports_t3socials_messagebuilder_MatchStatus implements tx_t3soci
     }
 
     /**
-     * @param tx_cfcleague_models_Match $match
+     * @param \System25\T3sports\Model\Fixture $match
      *
-     * @return tx_t3socials_models_Message
+     * @return tx_t3socials_models_Message|bool
      */
     public function buildGenericMatchStatusMessage($match, $trigger)
     {
         if (!($match->isRunning() || $match->isFinished())) {
             return false;
         }
-        /* @var $message tx_t3socials_models_Message */
+        /** @var tx_t3socials_models_Message $message */
         $message = tx_rnbase::makeInstance('tx_t3socials_models_Message', $trigger);
         $message->setData($match);
 

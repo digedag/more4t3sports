@@ -36,21 +36,13 @@
 		"phpunit/phpunit": "^6.5.14 || ^7.5.20 || ^8.0"
 	},
 	"autoload" : {
-		"classmap" : [
-			"Classes/",
-			"hooks/",
-			"srv/",
-			"t3socials/",
-			"tests/",
-			"util/"
-		],
 		"psr-4": {
 			"Sys25\\More4T3sports\\": "Classes"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"System25\\T3sports\\Tests\\" : "Tests/Unit/PHP",
+			"System25\\More4T3sports\\Tests\\" : "Tests/Unit/PHP",
 			"TYPO3\\CMS\\Core\\Tests\\":".Build/vendor/typo3/cms/typo3/sysext/core/Tests/",
 			"TYPO3\\CMS\\Fluid\\Tests\\": ".Build/vendor/typo3/cms/typo3/sysext/fluid/Tests/"
 		}

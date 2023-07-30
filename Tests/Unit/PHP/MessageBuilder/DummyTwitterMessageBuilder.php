@@ -1,8 +1,13 @@
 <?php
+
+namespace Sys25\More4T3sports\Tests\MessageBuilder;
+
+use Sys25\More4T3sports\T3socials\MessageBuilder\TwitterMessageBuilder;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012-2018 Rene Nitzsche (rene@system25.de)
+ *  (c) 2013-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,20 +26,11 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_rnbase_util_Misc');
 
-/**
- * Access a service instance.
- */
-class tx_more4t3sports_srv_Registry
+class DummyTwitterMessageBuilder extends TwitterMessageBuilder
 {
-    /**
-     * Liefert den Network-Service.
-     *
-     * @return tx_more4t3sports_srv_Socials
-     */
-    public static function getSocialService()
+    public function buildTickerMessage($message, $account, $confId)
     {
-        return tx_rnbase_util_Misc::getService('t3sports_srv', 'socials');
+        return parent::buildTickerMessage($message, $account, $confId);
     }
 }
