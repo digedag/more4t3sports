@@ -1,8 +1,15 @@
 <?php
+
+namespace Sys25\More4T3sports\Hook;
+
+use Sys25\More4T3sports\Service\Registry;
+use System25\T3sports\Model\Fixture;
+use System25\T3sports\Model\MatchNote;
+
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2012-2017 Rene Nitzsche <rene@system25.de>
+*  (c) 2012-2023 Rene Nitzsche <rene@system25.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,7 +29,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class tx_more4t3sports_hooks_TCEHook
+class TCEHook
 {
     /**
      * Wir müssen dafür sorgen, daß die neuen IDs der Teams im Wettbewerb und Spielen
@@ -58,13 +65,13 @@ class tx_more4t3sports_hooks_TCEHook
         if ('tx_cfcleague_match_notes' == $table && 'new' == $status) {
             // Nur wirklich aktuelle Tickermeldungen verbreiten
             $id = $tcemain->substNEWwithIDs[$id];
-            $note = tx_rnbase::makeInstance('tx_cfcleague_models_MatchNote', $id);
-            tx_more4t3sports_srv_Registry::getSocialService()->sendLiveticker($note);
+            $note = tx_rnbase::makeInstance(MatchNote::class, $id);
+            Registry::getSocialService()->sendLiveticker($note);
         }
         if ('tx_cfcleague_games' == $table && 'new' != $status) {
             if (isset($fieldArray['status'])) {
-                $match = tx_rnbase::makeInstance('tx_cfcleague_models_Match', $id);
-                tx_more4t3sports_srv_Registry::getSocialService()->sendMatchStateChanged($match);
+                $match = tx_rnbase::makeInstance(Fixture::class, $id);
+                Registry::getSocialService()->sendMatchStateChanged($match);
             }
         }
     }

@@ -1,8 +1,13 @@
 <?php
+
+namespace Sys25\More4T3sports\Tests\MessageBuilder;
+
+use tx_rnbase;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2013-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,13 +27,11 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-tx_rnbase::load('tx_more4t3sports_util_TwitterMessageBuilder');
-
-class tx_more4t3sports_tests_util_TwitterMessageBuilder_testcase extends tx_phpunit_testcase
+class TwitterMessageBuilderTest extends tx_phpunit_testcase
 {
-    public function test_buildTickerMessageExact()
+    public function testBuildTickerMessageExact()
     {
-        $builder = new tx_more4t3sports_tests_util_TwitterMessageBuilder();
+        $builder = new DummyTwitterMessageBuilder();
         $account = tx_rnbase::makeInstance('tx_t3socials_models_Network', ['uid' => 1]);
         $message = tx_rnbase::makeInstance('tx_t3socials_models_Message', 'liveticker');
 
@@ -51,7 +54,7 @@ class tx_more4t3sports_tests_util_TwitterMessageBuilder_testcase extends tx_phpu
         $this->assertEquals(0, strlen($msg));
     }
 
-    public function test_buildTickerMessage()
+    public function testBuildTickerMessage()
     {
         $account = tx_rnbase::makeInstance('tx_t3socials_models_Network', ['uid' => 1]);
 
@@ -61,7 +64,7 @@ class tx_more4t3sports_tests_util_TwitterMessageBuilder_testcase extends tx_phpu
         $message->setMessage('Super!');
         $message->setIntro('Tor durch Fink');
 
-        $builder = new tx_more4t3sports_tests_util_TwitterMessageBuilder();
+        $builder = new DummyTwitterMessageBuilder();
         $msg = $builder->buildTickerMessage($message, $account, 'twitter.');
         $this->assertTrue(strlen($msg) <= 140);
         $this->assertEquals('BVB-CFC 0:3 Tor durch Fink Super! http://derserver.de', $msg);
@@ -83,13 +86,5 @@ class tx_more4t3sports_tests_util_TwitterMessageBuilder_testcase extends tx_phpu
         $this->assertTrue(strlen($msg) <= 140);
         // Die URL ist hier raus
         $this->assertEquals('BVB-CFC 0:3 http://derserver.de', $msg, 'Meldung ohne Intro und Kommentar');
-    }
-}
-
-class tx_more4t3sports_tests_util_TwitterMessageBuilder extends tx_more4t3sports_util_TwitterMessageBuilder
-{
-    public function buildTickerMessage($message, $account, $confId)
-    {
-        return parent::buildTickerMessage($message, $account, $confId);
     }
 }

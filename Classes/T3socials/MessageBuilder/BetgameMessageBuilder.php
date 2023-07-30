@@ -1,8 +1,19 @@
 <?php
+
+namespace Sys25\More4T3sports\T3socials\MessageBuilder;
+
+use Sys25\RnBase\Utility\Misc;
+use tx_rnbase;
+use tx_t3socials_models_Base;
+use tx_t3socials_models_IMessage;
+use tx_t3socials_models_Network;
+use tx_t3socials_models_TriggerConfig;
+use tx_t3socials_trigger_IMessageBuilder;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2014-2018 Rene Nitzsche <rene@system25.de>
+ *  (c) 2014-2023 Rene Nitzsche <rene@system25.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,12 +32,11 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-tx_rnbase::load('tx_t3socials_trigger_IMessageBuilder');
 
 /**
  * Message Builder für Tipspiel-Update von T3sportsbet.
  */
-class tx_more4t3sports_t3socials_betgame_MessageBuilder implements tx_t3socials_trigger_IMessageBuilder
+class BetgameMessageBuilder implements tx_t3socials_trigger_IMessageBuilder
 {
     private $betgame;
 
@@ -40,7 +50,7 @@ class tx_more4t3sports_t3socials_betgame_MessageBuilder implements tx_t3socials_
         // Das wird nochmal für den Link benötigt
         $this->betgame = $betgame;
         /**
-         * @var tx_t3socials_models_Message
+         * @var \tx_t3socials_models_Message $message
          */
         $message = tx_rnbase::makeInstance('tx_t3socials_models_Message', 'betgameUpdated');
         $message->setHeadline('Tippspiel aktualisiert');
@@ -52,8 +62,7 @@ class tx_more4t3sports_t3socials_betgame_MessageBuilder implements tx_t3socials_
     /**
      * Spezielle Netzwerk und Triggerabhängige Dinge durchführen.
      *
-     * @param
-     *            tx_t3socials_models_IMessage &$message
+     * @param tx_t3socials_models_IMessage $message
      * @param tx_t3socials_models_Network $network
      * @param tx_t3socials_models_TriggerConfig $trigger
      *
@@ -63,8 +72,7 @@ class tx_more4t3sports_t3socials_betgame_MessageBuilder implements tx_t3socials_
     {
         // Warum ist das abhängig vom Account?
         $config = $network->getConfigurations();
-        tx_rnbase::load('tx_rnbase_util_Misc');
-        tx_rnbase_util_Misc::prepareTSFE();
+        Misc::prepareTSFE();
         $link = $config->createLink();
         $link->designatorString = 't3sportsbet'; // tx_ttnews[tt_news]
         $link->initByTS($config, $network->getNetwork().'.betgameUpdated.link.show.', []);

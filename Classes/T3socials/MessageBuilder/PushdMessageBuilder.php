@@ -1,8 +1,16 @@
 <?php
+
+namespace Sys25\More4T3sports\T3socials\MessageBuilder;
+
+use Sys25\RnBase\Utility\Strings;
+use tx_t3socials_models_IMessage;
+use tx_t3socials_models_Network;
+use tx_t3socials_network_pushd_MessageBuilder;
+
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013-2017 Rene Nitzsche (rene@system25.de)
+ *  (c) 2013-2023 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,13 +30,10 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-tx_rnbase::load('tx_rnbase_util_Logger');
-tx_rnbase::load('tx_t3socials_network_pushd_MessageBuilder');
-
 /**
  * Baut PushNotifications für Sportmeldungen. Derzeit nur Liveticker.
  */
-class tx_more4t3sports_util_PushdMessageBuilder extends tx_t3socials_network_pushd_MessageBuilder
+class PushdMessageBuilder extends tx_t3socials_network_pushd_MessageBuilder
 {
     /**
      * Creates a tweet from generic message.
@@ -95,7 +100,7 @@ class tx_more4t3sports_util_PushdMessageBuilder extends tx_t3socials_network_pus
     {
         $type = $ticker->getType();
         foreach ($mappings as $event => $typeString) {
-            $types = array_flip(Tx_Rnbase_Utility_Strings::trimExplode(',', $typeString));
+            $types = array_flip(Strings::trimExplode(',', $typeString));
             if (array_key_exists($type, $types)) {
                 return $event;
             }

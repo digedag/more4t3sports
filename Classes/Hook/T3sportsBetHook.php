@@ -1,8 +1,14 @@
 <?php
+
+namespace Sys25\More4T3sports\Hook;
+
+use Sys25\More4T3sports\Service\Registry;
+use Sys25\More4T3sports\Service\T3socialsService;
+
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2012 Rene Nitzsche <rene@system25.de>
+*  (c) 2012-2023 Rene Nitzsche <rene@system25.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,8 +28,16 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-class tx_more4t3sports_hooks_T3sportsBet
+class T3sportsBetHook
 {
+    private $t3socialsService;
+
+    public function __construct(
+        T3socialsService $t3socialsService
+    ) {
+        $this->t3socialsService = $t3socialsService ?: Registry::getSocialService();
+    }
+
     public function analyseBets($params, $parent)
     {
         $calculatedBets = $params['calculatedBets'];
@@ -32,6 +46,6 @@ class tx_more4t3sports_hooks_T3sportsBet
         }
         $betgame = $params['betgame'];
         // Nachricht twittern
-        tx_more4t3sports_srv_Registry::getSocialService()->sendBetGameUpdated($betgame, $calculatedBets);
+        $this->t3socialsService->sendBetGameUpdated($betgame, $calculatedBets);
     }
 }
