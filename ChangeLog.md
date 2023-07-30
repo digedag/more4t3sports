@@ -1,5 +1,8 @@
 # Änderungen
 
+v0.7.1 (30.07.2023)
+ * Fix integration for news 9.x
+
 v0.7.0 (11.02.2023)
  * Support TYPO3 11.5 and PHP 8
 
