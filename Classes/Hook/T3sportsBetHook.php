@@ -33,7 +33,7 @@ class T3sportsBetHook
     private $t3socialsService;
 
     public function __construct(
-        T3socialsService $t3socialsService
+        ?T3socialsService $t3socialsService = null
     ) {
         $this->t3socialsService = $t3socialsService ?: Registry::getSocialService();
     }

@@ -37,7 +37,7 @@ class Registry
     private $socialsService = null;
 
     public function __construct(
-        T3socialsService $socialsService = null
+        ?T3socialsService $socialsService = null
     ) {
         $this->socialsService = $socialsService ?: new T3socialsService();
     }
@@ -47,7 +47,7 @@ class Registry
      */
     private static function getInstance()
     {
-        return tx_rnbase::makeInstance(ServiceRegistry::class);
+        return tx_rnbase::makeInstance(Registry::class);
     }
 
     /**

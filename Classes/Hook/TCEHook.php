@@ -3,8 +3,10 @@
 namespace Sys25\More4T3sports\Hook;
 
 use Sys25\More4T3sports\Service\Registry;
+use Sys25\More4T3sports\Service\T3socialsService;
 use System25\T3sports\Model\Fixture;
 use System25\T3sports\Model\MatchNote;
+use tx_rnbase;
 
 /***************************************************************
 *  Copyright notice
@@ -31,6 +33,14 @@ use System25\T3sports\Model\MatchNote;
 
 class TCEHook
 {
+    private $t3socialsService;
+
+    public function __construct(
+        ?T3socialsService $t3socialsService = null
+    ) {
+        $this->t3socialsService = $t3socialsService ?: Registry::getSocialService();
+    }
+
     /**
      * Wir müssen dafür sorgen, daß die neuen IDs der Teams im Wettbewerb und Spielen
      * verwendet werden.
@@ -66,12 +76,12 @@ class TCEHook
             // Nur wirklich aktuelle Tickermeldungen verbreiten
             $id = $tcemain->substNEWwithIDs[$id];
             $note = tx_rnbase::makeInstance(MatchNote::class, $id);
-            Registry::getSocialService()->sendLiveticker($note);
+            $this->t3socialsService->sendLiveTicker($note);
         }
         if ('tx_cfcleague_games' == $table && 'new' != $status) {
             if (isset($fieldArray['status'])) {
                 $match = tx_rnbase::makeInstance(Fixture::class, $id);
-                Registry::getSocialService()->sendMatchStateChanged($match);
+                $this->t3socialsService->sendMatchStateChanged($match);
             }
         }
     }
