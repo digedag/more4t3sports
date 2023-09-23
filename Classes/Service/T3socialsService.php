@@ -42,6 +42,17 @@ use tx_t3sportsbet_models_Betgame;
  */
 class T3socialsService
 {
+    private $mtMsgBuilder;
+    private $msMsgBuilder;
+
+    public function __construct(
+        ?MatchTickerMessageBuilder $mtMsgBuilder = null,
+        ?MatchStatusMessageBuilder $msMsgBuilder = null
+    ) {
+        $this->mtMsgBuilder = $mtMsgBuilder ?: tx_rnbase::makeInstance(MatchTickerMessageBuilder::class);
+        $this->msMsgBuilder = $msMsgBuilder ?: tx_rnbase::makeInstance(MatchStatusMessageBuilder::class);
+    }
+
     /**
      * Versenden eine Twittermeldung bei Aktualisierung des Tippspiels.
      *
@@ -93,16 +104,13 @@ class T3socialsService
             return;
         }
 
-        $builder = tx_rnbase::makeInstance(MatchTickerMessageBuilder::class);
         // Die generische Message bauen
-        $message = $builder->buildTickerMessage($match, $ticker);
+        $message = $this->mtMsgBuilder->buildTickerMessage($match, $ticker);
 
-        tx_rnbase::load('tx_t3socials_trigger_Config');
-        /* @var tx_t3socials_models_TriggerConfig $triggerConfig */
+        /** @var tx_t3socials_models_TriggerConfig $triggerConfig */
         $triggerConfig = tx_t3socials_trigger_Config::getTriggerConfig($trigger);
-
         if ($message) {
-            return tx_t3socials_srv_ServiceRegistry::getNetworkService()->sendMessage($message, $accounts, $builder, $triggerConfig);
+            tx_t3socials_srv_ServiceRegistry::getNetworkService()->sendMessage($message, $accounts, $this->mtMsgBuilder, $triggerConfig);
         }
     }
 
@@ -170,18 +178,20 @@ class T3socialsService
             return;
         }
 
-        /** @var MatchStatusMessageBuilder $builder */
-        $builder = tx_rnbase::makeInstance(MatchStatusMessageBuilder::class);
-        $message = $builder->buildGenericMatchStatusMessage($match, $trigger);
+        $message = $this->msMsgBuilder->buildGenericMatchStatusMessage($match, $trigger);
 
         if ($message) {
             /* @var tx_t3socials_models_TriggerConfig $triggerConfig */
             $triggerConfig = tx_t3socials_trigger_Config::getTriggerConfig($trigger);
-            $states = tx_t3socials_srv_ServiceRegistry::getNetworkService()->sendMessage($message, $accounts, $builder, $triggerConfig);
+            $states = tx_t3socials_srv_ServiceRegistry::getNetworkService()->sendMessage($message, $accounts, $this->msMsgBuilder, $triggerConfig);
             $this->logSuccessfulNotifications($states, $trigger);
         }
     }
 
+    /**
+     * @param \tx_t3socials_models_State[] $states
+     * @param string $trigger
+     */
     protected function logSuccessfulNotifications($states, $trigger)
     {
         $infos = [];
@@ -190,6 +200,7 @@ class T3socialsService
                 $infos[] = $status->getMessage();
             }
         }
+
         if (!empty($infos)) {
             Logger::warn('Notification for '.$trigger.' send!', 'more4t3sports', $infos);
         }

@@ -4,6 +4,8 @@ namespace Sys25\More4T3sports\T3socials\MessageBuilder;
 
 use System25\T3sports\Model\Fixture;
 use System25\T3sports\Model\MatchNote;
+use System25\T3sports\Model\Profile;
+use System25\T3sports\Model\Repository\ProfileRepository;
 use System25\T3sports\Utility\MatchTicker;
 use tx_rnbase;
 use tx_t3socials_models_Base;
@@ -41,6 +43,13 @@ use tx_t3socials_trigger_IMessageBuilder;
  */
 class MatchTickerMessageBuilder implements tx_t3socials_trigger_IMessageBuilder
 {
+    private $profileRepo;
+
+    public function __construct(ProfileRepository $profileRepo = null)
+    {
+        $this->profileRepo = $profileRepo ?: new ProfileRepository();
+    }
+
     public function buildGenericMessage(tx_t3socials_models_Base $model)
     {
         // Not used
@@ -52,7 +61,7 @@ class MatchTickerMessageBuilder implements tx_t3socials_trigger_IMessageBuilder
      *
      * @return tx_t3socials_models_IMessage
      */
-    public function buildTickerMessage($match, $ticker)
+    public function buildTickerMessage(Fixture $match, MatchNote $ticker)
     {
         // Alle Ticker laden
         $matchTicker = new MatchTicker();
@@ -60,7 +69,7 @@ class MatchTickerMessageBuilder implements tx_t3socials_trigger_IMessageBuilder
         $tickerArr = array_reverse($tickerArr);
         $found = false;
         foreach ($tickerArr as $matchTicker) {
-            if ($matchTicker->uid == $ticker->uid) {
+            if ($matchTicker->getUid() == $ticker->getUid()) {
                 $found = true;
                 $ticker = $matchTicker;
                 break;
@@ -91,12 +100,14 @@ class MatchTickerMessageBuilder implements tx_t3socials_trigger_IMessageBuilder
         if ($match->getProperty('status') > 0 || $ticker->getMinute() > 0) {
             // Das Ergebnis aus dem Ticker lesen, da es aktueller ist
             $prefix .= ' '.$ticker->getProperty('goals_home').':'.$ticker->getProperty('goals_guest');
-            // $prefix .= ' ' . $match->getGoalsHome() .':' . $match->getGoalsGuest();
         }
         // Paarung und Spielstand als Headline
         $message->setHeadline($prefix);
 
-        $player = $ticker->getPlayerInstance();
+        $playerUid = $ticker->getPlayer();
+        /** @var Profile $player */
+        $player = $this->profileRepo->findByUid($playerUid);
+
         if (!(is_object($player) && $player->isValid())) {
             $player = false;
         }
