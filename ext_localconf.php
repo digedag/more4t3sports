@@ -14,7 +14,6 @@ if (Sys25\RnBase\Utility\Extensions::isLoaded('t3socials')) {
             'subtype' => 'socials',
             'available' => true, 'priority' => 50, 'quality' => 50,
             'os' => '', 'exec' => '',
-            'classFile' => Sys25\RnBase\Utility\Extensions::extPath($_EXTKEY).'srv/class.tx_more4t3sports_srv_Socials.php',
             'className' => 'tx_more4t3sports_srv_Socials',
         ]
     );
