@@ -8,7 +8,7 @@ use Sys25\More4T3sports\T3socials\MessageBuilder\MatchTickerMessageBuilder;
 use Sys25\RnBase\Utility\Logger;
 use System25\T3sports\Model\Fixture;
 use tx_rnbase;
-use tx_t3socials_srv_ServiceRegistry;
+use tx_t3socials_models_State;
 use tx_t3socials_trigger_Config;
 use tx_t3sportsbet_models_Betgame;
 
@@ -44,13 +44,16 @@ class T3socialsService
 {
     private $mtMsgBuilder;
     private $msMsgBuilder;
+    private $networkSrv;
 
     public function __construct(
-        ?MatchTickerMessageBuilder $mtMsgBuilder = null,
-        ?MatchStatusMessageBuilder $msMsgBuilder = null
+        \DMK\T3socials\Service\Network $networkSrv,
+        MatchTickerMessageBuilder $mtMsgBuilder,
+        MatchStatusMessageBuilder $msMsgBuilder
     ) {
-        $this->mtMsgBuilder = $mtMsgBuilder ?: tx_rnbase::makeInstance(MatchTickerMessageBuilder::class);
-        $this->msMsgBuilder = $msMsgBuilder ?: tx_rnbase::makeInstance(MatchStatusMessageBuilder::class);
+        $this->networkSrv = $networkSrv;
+        $this->mtMsgBuilder = $mtMsgBuilder;
+        $this->msMsgBuilder = $msMsgBuilder;
     }
 
     /**
@@ -62,7 +65,7 @@ class T3socialsService
     public function sendBetGameUpdated($betgame, $calculatedBets)
     {
         $trigger = 'betgameUpdated';
-        $accounts = tx_t3socials_srv_ServiceRegistry::getNetworkService()->findAccounts($trigger);
+        $accounts = $this->networkSrv->findAccounts($trigger);
         if (empty($accounts)) {
             return;
         }
@@ -74,7 +77,7 @@ class T3socialsService
         /* @var tx_t3socials_models_TriggerConfig $triggerConfig */
         $triggerConfig = tx_t3socials_trigger_Config::getTriggerConfig($trigger);
 
-        return tx_t3socials_srv_ServiceRegistry::getNetworkService()->sendMessage($message, $accounts, $builder, $triggerConfig);
+        return $this->networkSrv->sendMessage($message, $accounts, $builder, $triggerConfig);
     }
 
     /**
@@ -99,7 +102,7 @@ class T3socialsService
         }
 
         $trigger = 'liveticker';
-        $accounts = tx_t3socials_srv_ServiceRegistry::getNetworkService()->findAccounts($trigger);
+        $accounts = $this->networkSrv->findAccounts($trigger);
         if (empty($accounts)) {
             return;
         }
@@ -110,7 +113,7 @@ class T3socialsService
         /** @var tx_t3socials_models_TriggerConfig $triggerConfig */
         $triggerConfig = tx_t3socials_trigger_Config::getTriggerConfig($trigger);
         if ($message) {
-            tx_t3socials_srv_ServiceRegistry::getNetworkService()->sendMessage($message, $accounts, $this->mtMsgBuilder, $triggerConfig);
+            $this->networkSrv->sendMessage($message, $accounts, $this->mtMsgBuilder, $triggerConfig);
         }
     }
 
@@ -173,7 +176,7 @@ class T3socialsService
             return;
         }
 
-        $accounts = tx_t3socials_srv_ServiceRegistry::getNetworkService()->findAccounts($trigger);
+        $accounts = $this->networkSrv->findAccounts($trigger);
         if (empty($accounts)) {
             return;
         }
@@ -183,13 +186,13 @@ class T3socialsService
         if ($message) {
             /* @var tx_t3socials_models_TriggerConfig $triggerConfig */
             $triggerConfig = tx_t3socials_trigger_Config::getTriggerConfig($trigger);
-            $states = tx_t3socials_srv_ServiceRegistry::getNetworkService()->sendMessage($message, $accounts, $this->msMsgBuilder, $triggerConfig);
+            $states = $this->networkSrv->sendMessage($message, $accounts, $this->msMsgBuilder, $triggerConfig);
             $this->logSuccessfulNotifications($states, $trigger);
         }
     }
 
     /**
-     * @param \tx_t3socials_models_State[] $states
+     * @param tx_t3socials_models_State[] $states
      * @param string $trigger
      */
     protected function logSuccessfulNotifications($states, $trigger)

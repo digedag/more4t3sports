@@ -39,8 +39,8 @@ if (Sys25\RnBase\Utility\Extensions::isLoaded('t3socials')) {
     // ------- HOOKS -----------
     // -------------------------
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = 'Sys25\More4T3sports\Hook\TCEHook';
-    //$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tceforms.php']['getMainFieldsClass'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_cfcleague_hooks_tcehook.php:tx_cfcleague_hooks_tcehook';
-    //$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_cfcleague_hooks_cmhooks.php:tx_cfcleague_hooks_cmhooks';
+    // $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tceforms.php']['getMainFieldsClass'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_cfcleague_hooks_tcehook.php:tx_cfcleague_hooks_tcehook';
+    // $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass'][] = 'EXT:' . $_EXTKEY . '/hooks/class.tx_cfcleague_hooks_cmhooks.php:tx_cfcleague_hooks_cmhooks';
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['t3sportsbet']['srv_Bet_analysebets_finished_hook'][] = 'Sys25\More4T3sports\Hook\T3sportsBet->analyseBets';
 }
 
@@ -50,10 +50,10 @@ if (Sys25\RnBase\Utility\Extensions::isLoaded('t3socials')) {
 $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['cfc_league_fe']['matchMarker_initRecord'][] = 'Sys25\More4T3sports\Hook\MatchMarkerHook->addNewsRecords';
 
 if (!Sys25\RnBase\Utility\TYPO3::isTYPO115OrHigher() && Sys25\RnBase\Utility\Extensions::isLoaded('news')) {
-    /** @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher */
-    $signalSlotDispatcher = \tx_rnbase::makeInstance(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
+    /** @var TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher */
+    $signalSlotDispatcher = tx_rnbase::makeInstance(TYPO3\CMS\Extbase\SignalSlot\Dispatcher::class);
     $signalSlotDispatcher->connect(
         'GeorgRinger\News\Controller\NewsController', 'detailAction',
-        \Sys25\More4T3sports\Listener\NewsListener::class, 'lookupNewsRecord'
+        Sys25\More4T3sports\Listener\NewsListener::class, 'lookupNewsRecord'
     );
 }

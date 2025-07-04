@@ -34,12 +34,12 @@ use tx_rnbase;
  */
 class Registry
 {
-    private $socialsService = null;
+    private $socialsService;
 
     public function __construct(
         ?T3socialsService $socialsService = null
     ) {
-        $this->socialsService = $socialsService ?: new T3socialsService();
+        $this->socialsService = $socialsService;
     }
 
     /**

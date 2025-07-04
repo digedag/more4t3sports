@@ -4,9 +4,22 @@ services:
     autoconfigure: true
     public: false
 
+  Sys25\More4T3sports\:
+    resource: '../Classes/*'
+
   Sys25\More4T3sports\Listener\NewsListener:
     tags:
       - name: event.listener
         identifier: 'more4t3sports-news-detail'
         method: 'handleNewsDetail'
         event: GeorgRinger\News\Event\NewsDetailActionEvent
+
+  Sys25\More4T3sports\Service\Registry:
+    public: true
+  Sys25\More4T3sports\Hook\TCEHook:
+    public: true
+  Sys25\More4T3sports\Hook\T3sportsBetHook:
+    public: true
+  Sys25\More4T3sports\Hook\MatchMarkerHook:
+    public: true
+

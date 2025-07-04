@@ -1,6 +1,6 @@
 <?php
 
-//#######################################################################
+// #######################################################################
 // Extension Manager/Repository config file for ext "rn_base".
 //
 // Auto generated 14-01-2012 13:44
@@ -8,7 +8,7 @@
 // Manual updates:
 // Only the data in the array - everything else is removed by next
 // writing. "version" and "dependencies" must not be touched!
-//#######################################################################
+// #######################################################################
 
 $EM_CONF[$_EXTKEY] = [
     'title' => 'More for T3sports',
@@ -26,7 +26,7 @@ $EM_CONF[$_EXTKEY] = [
     'author_company' => 'System 25',
     'constraints' => [
         'depends' => [
-            'typo3' => '8.7.0-12.4.99',
+            'typo3' => '10.4.0-13.4.99',
             'php' => '7.1.0-8.2.99',
             'rn_base' => '1.17.0-0.0.0',
             'cfc_league' => '1.11.0-0.0.0',

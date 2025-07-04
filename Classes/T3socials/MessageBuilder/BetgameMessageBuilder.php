@@ -6,6 +6,7 @@ use Sys25\RnBase\Utility\Misc;
 use tx_rnbase;
 use tx_t3socials_models_Base;
 use tx_t3socials_models_IMessage;
+use tx_t3socials_models_Message;
 use tx_t3socials_models_Network;
 use tx_t3socials_models_TriggerConfig;
 use tx_t3socials_trigger_IMessageBuilder;
@@ -50,7 +51,7 @@ class BetgameMessageBuilder implements tx_t3socials_trigger_IMessageBuilder
         // Das wird nochmal für den Link benötigt
         $this->betgame = $betgame;
         /**
-         * @var \tx_t3socials_models_Message $message
+         * @var tx_t3socials_models_Message $message
          */
         $message = tx_rnbase::makeInstance('tx_t3socials_models_Message', 'betgameUpdated');
         $message->setHeadline('Tippspiel aktualisiert');
