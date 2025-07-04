@@ -4,6 +4,7 @@ namespace Sys25\More4T3sports\Hook;
 
 use Sys25\More4T3sports\Service\Registry;
 use Sys25\More4T3sports\Service\T3socialsService;
+use Sys25\RnBase\Utility\Extensions;
 
 /***************************************************************
 *  Copyright notice
@@ -33,13 +34,17 @@ class T3sportsBetHook
     private $t3socialsService;
 
     public function __construct(
-        ?T3socialsService $t3socialsService = null
+        ?T3socialsService $t3socialsService = null,
     ) {
         $this->t3socialsService = $t3socialsService ?: Registry::getSocialService();
     }
 
     public function analyseBets($params, $parent)
     {
+        if (!Extensions::isLoaded('t3socials')) {
+            return;
+        }
+
         $calculatedBets = $params['calculatedBets'];
         if (!$calculatedBets) {
             return;

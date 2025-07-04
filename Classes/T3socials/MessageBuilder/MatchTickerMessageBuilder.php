@@ -45,7 +45,7 @@ class MatchTickerMessageBuilder implements tx_t3socials_trigger_IMessageBuilder
 {
     private $profileRepo;
 
-    public function __construct(ProfileRepository $profileRepo = null)
+    public function __construct(?ProfileRepository $profileRepo = null)
     {
         $this->profileRepo = $profileRepo ?: new ProfileRepository();
     }
@@ -147,8 +147,8 @@ class MatchTickerMessageBuilder implements tx_t3socials_trigger_IMessageBuilder
                 }
                 $msg .= 'Rote Karte für '.$player->getName();
                 break;
-            // default:
-            // $msg .= $player->getName();
+                // default:
+                // $msg .= $player->getName();
         }
 
         // Die automatische Meldung ist der Subtitle

@@ -24,9 +24,9 @@
 		"typo3-ter/more4t3sports" : "self.version"
 	},
 	"require" : {
-		"typo3/cms-core": "^8.7 || ^9.5 || ^10.4 || ^11.5|| ^12.4",
+		"typo3/cms-core": "^10.4 || ^11.5 || ^12.4 || ^13.4",
 		"digedag/cfc-league" : "^1.11.0",
-		"digedag/rn-base" : "^1.17.0"
+		"digedag/rn-base" : "^1.19.0"
 	},
 	"require-dev": {
 		"friendsofphp/php-cs-fixer": "^3.1.0",

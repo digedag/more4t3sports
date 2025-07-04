@@ -4,6 +4,7 @@ namespace Sys25\More4T3sports\Hook;
 
 use Sys25\More4T3sports\Service\Registry;
 use Sys25\More4T3sports\Service\T3socialsService;
+use Sys25\RnBase\Utility\Extensions;
 use System25\T3sports\Model\Fixture;
 use System25\T3sports\Model\MatchNote;
 use tx_rnbase;
@@ -36,7 +37,7 @@ class TCEHook
     private $t3socialsService;
 
     public function __construct(
-        ?T3socialsService $t3socialsService = null
+        ?T3socialsService $t3socialsService = null,
     ) {
         $this->t3socialsService = $t3socialsService ?: Registry::getSocialService();
     }
@@ -72,6 +73,10 @@ class TCEHook
      */
     public function processDatamap_afterDatabaseOperations($status, $table, $id, $fieldArray, &$tcemain)
     {
+        if (!Extensions::isLoaded('t3socials')) {
+            return;
+        }
+
         if ('tx_cfcleague_match_notes' == $table && 'new' == $status) {
             // Nur wirklich aktuelle Tickermeldungen verbreiten
             $id = $tcemain->substNEWwithIDs[$id];
