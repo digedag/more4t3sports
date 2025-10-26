@@ -9,6 +9,21 @@
 			<trans-unit id="tx_cfcleague_games_newsreport" xml:space="preserve">
 				<source>Match report</source>
 			</trans-unit>
+			<trans-unit id="tx_more4t3sports_newsrel" xml:space="preserve">
+				<source>News relation</source>
+			</trans-unit>
+			<trans-unit id="tx_more4t3sports_newsrel_category" xml:space="preserve">
+				<source>Category</source>
+			</trans-unit>
+			<trans-unit id="tx_more4t3sports_newsrel_news" xml:space="preserve">
+				<source>News</source>
+			</trans-unit>
+			<trans-unit id="tx_more4t3sports_newsrel_uri" xml:space="preserve">
+				<source>URL</source>
+			</trans-unit>
+			<trans-unit id="tx_more4t3sports_newsrel_uri_placeholder" xml:space="preserve">
+				<source>www.domain.de/page.html</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

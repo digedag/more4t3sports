@@ -11,6 +11,49 @@ lib.t3sports.news {
 	links.news.qualifier = tx_news_pi1
 }
 
+lib.t3sports.twig.relations {
+	newsrel {
+		join {
+			alias = NEWSREL
+			field = parentid
+		}
+
+		callback {
+			class = Sys25\More4T3sports\Repository\NewsRelRepository
+			method = search
+		}
+
+		options.orderby >
+		options.orderby {
+			NEWSREL {
+				sorting = asc
+			}
+		}
+	}
+	newsrel2cat {
+		join {
+			alias = SYS_CATEGORY
+			field = uid
+			on = category
+		}
+		callback {
+			class = Sys25\RnBase\Domain\Repository\CategoryRepository
+			method = search
+		}
+	}
+	newsrel2news {
+		join {
+			alias = NEWS
+			field = uid
+			on = news
+		}
+		callback {
+			class = Sys25\More4T3sports\Repository\NewsRepository
+			method = search
+		}
+	}
+}
+
 lib.t3sports.match {
 
 	newsreport =< lib.t3sports.news
@@ -18,4 +61,5 @@ lib.t3sports.match {
 	newspreview {
 		_template.subpartName = ###NEWSPREVIEW###
 	}
+	links.news =< lib.t3sports.news.links.news
 }
