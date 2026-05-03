@@ -23,3 +23,6 @@ services:
   Sys25\More4T3sports\Hook\MatchMarkerHook:
     public: true
 
+  Sys25\More4T3sports\Service\T3socialsService:
+    calls:
+      - [setNetworkService, ['@?DMK\T3socials\Service\Network']]
