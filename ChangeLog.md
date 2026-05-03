@@ -1,5 +1,8 @@
 # Änderungen
 
+v0.9.1 (??.05.2026)
+ * Fix issues when t3socials is not installed
+
 v0.9.0 (03.05.2026)
  * Support TYPO3 12.4 and 13.4
  * Dropped support for TYPO3 8 and 9

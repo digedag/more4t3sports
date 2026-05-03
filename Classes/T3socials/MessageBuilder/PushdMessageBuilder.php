@@ -10,7 +10,7 @@ use tx_t3socials_network_pushd_MessageBuilder;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013-2023 Rene Nitzsche (rene@system25.de)
+ *  (c) 2013-2026 Rene Nitzsche (rene@system25.de)
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,6 +29,14 @@ use tx_t3socials_network_pushd_MessageBuilder;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+
+if (!interface_exists('tx_t3socials_network_pushd_MessageBuilder')) {
+    class PushdMessageBuilder
+    {
+    }
+
+    return;
+}
 
 /**
  * Baut PushNotifications für Sportmeldungen. Derzeit nur Liveticker.

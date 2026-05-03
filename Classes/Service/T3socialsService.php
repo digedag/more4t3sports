@@ -44,16 +44,23 @@ class T3socialsService
 {
     private $mtMsgBuilder;
     private $msMsgBuilder;
-    private $networkSrv;
+    private ?\DMK\T3socials\Service\Network $networkSrv = null;
 
     public function __construct(
-        \DMK\T3socials\Service\Network $networkSrv,
         MatchTickerMessageBuilder $mtMsgBuilder,
         MatchStatusMessageBuilder $msMsgBuilder
     ) {
         $this->networkSrv = $networkSrv;
         $this->mtMsgBuilder = $mtMsgBuilder;
         $this->msMsgBuilder = $msMsgBuilder;
+    }
+
+    /**
+     * @param \DMK\T3socials\Service\Network $networkSrv
+     */
+    public function setNetworkService(\DMK\T3socials\Service\Network $networkSrv): void
+    {
+        $this->networkSrv = $networkSrv;
     }
 
     /**

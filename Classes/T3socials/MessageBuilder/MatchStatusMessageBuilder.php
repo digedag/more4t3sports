@@ -13,7 +13,7 @@ use tx_t3socials_trigger_IMessageBuilder;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2015-2023 Rene Nitzsche <rene@system25.de>
+ *  (c) 2015-2026 Rene Nitzsche <rene@system25.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -32,6 +32,14 @@ use tx_t3socials_trigger_IMessageBuilder;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+
+if (!interface_exists('tx_t3socials_trigger_IMessageBuilder')) {
+    class MatchStatusMessageBuilder
+    {
+    }
+
+    return;
+}
 
 /**
  * Message Builder für Spielstatus.
