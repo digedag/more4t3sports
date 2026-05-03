@@ -14,7 +14,7 @@ $EM_CONF[$_EXTKEY] = [
     'title' => 'More for T3sports',
     'description' => 'Useful extensions for T3sports.',
     'category' => 'misc',
-    'version' => '0.8.0',
+    'version' => '0.9.0',
     'dependencies' => 'cms',
     'module' => '',
     'state' => 'stable',
@@ -28,7 +28,7 @@ $EM_CONF[$_EXTKEY] = [
         'depends' => [
             'typo3' => '10.4.0-13.4.99',
             'rn_base' => '1.20.0-0.0.0',
-            'cfc_league' => '1.11.0-0.0.0',
+            'cfc_league' => '1.12.0-0.0.0',
         ],
         'conflicts' => [],
         'suggests' => [
