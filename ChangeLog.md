@@ -1,12 +1,11 @@
 # Änderungen
 
-v0.9.0 (??.??.202?)
- * Allow install in TYPO3 13.4
+v0.9.0 (03.05.2026)
+ * Support TYPO3 12.4 and 13.4
+ * Dropped support for TYPO3 8 and 9
  * Some fixes for hooks
  * Requires at least TYPO3 10
-
-v0.8.0 (30.07.2023)
- * Support TYPO3 12.4
+ * new connectivity between news and fixtures
 
 v0.7.1 (30.07.2023)
  * Fix integration for news 9.x

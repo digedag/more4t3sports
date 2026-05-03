@@ -15,6 +15,7 @@ What is this extension for?
 ---------------------------
 It provides some additinal features for T3sports.
 - an API to communicate with socials networks.
-- use **tt_news** or **news** records for match reports
+- use **news** records for match reports
+- add relations between news and fixtures
 
 [Read documentation for more information](Documentation/README.md)

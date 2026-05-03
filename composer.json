@@ -24,16 +24,17 @@
 		"typo3-ter/more4t3sports" : "self.version"
 	},
 	"require" : {
+		"php": ">=8.0.0",
 		"typo3/cms-core": "^10.4 || ^11.5 || ^12.4 || ^13.4",
-		"digedag/cfc-league" : "^1.11.0",
-		"digedag/rn-base" : "^1.20.0"
+		"digedag/rn-base" : "^1.20.0",
+		"digedag/cfc-league" : "^1.12.0"
 	},
 	"require-dev": {
-		"friendsofphp/php-cs-fixer": "^3.1",
+		"friendsofphp/php-cs-fixer": "^3.0",
 		"mikey179/vfsstream": "^1.4 || ^1.6",
-		"nimut/testing-framework": "^4.0 || ^5.0 || ^6.0",
+		"nimut/testing-framework": "^6.0 || ^7.0 || ^8.0 || ^9.0",
 		"phpcompatibility/php-compatibility": "^9.3.5",
-		"phpunit/phpunit": "^6.5.14 || ^7.5.20 || ^8.0"
+		"phpunit/phpunit": "^6.5.14 || ^7.5.20 || ^8.0 || ^9.0"
 	},
 	"autoload" : {
 		"psr-4": {
@@ -52,6 +53,10 @@
         "bin-dir": ".Build/bin",
         "preferred-install": {
             "typo3/cms": "source"
+        },
+        "audit": {
+            "abandoned": "ignore",
+            "block-insecure": false
         },
         "allow-plugins": {
             "typo3/class-alias-loader": true,
