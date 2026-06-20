@@ -1,6 +1,9 @@
 # Änderungen
 
-v0.9.1 (03.05.2026)
+v0.9.3 (20.06.2026)
+ * Fix php warning
+
+v0.9.2 (03.05.2026)
  * Fix issues when t3socials is not installed
 
 v0.9.0 (03.05.2026)
