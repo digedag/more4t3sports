@@ -2,6 +2,8 @@
 
 namespace Sys25\More4T3sports\Listener;
 
+use Sys25\RnBase\Utility\TYPO3;
+
 /***************************************************************
 * Copyright notice
 *
@@ -37,7 +39,7 @@ class NewsListener
         $values = $event->getAssignedValues();
         $newsItem = $values['newsItem'];
 
-        if (!$newsItem && $newsUid = $GLOBALS['TSFE']->register['T3SPORTS_NEWSUID']) {
+        if (!$newsItem && $newsUid = TYPO3::getTSFE()->register['T3SPORTS_NEWSUID'] ?? null) {
             $newsItem = $this->newsRepository->findByUid($newsUid);
             $values['newsItem'] = $newsItem;
         }
@@ -47,7 +49,7 @@ class NewsListener
 
     public function lookupNewsRecord($newsItem, $currentPage, $demand, $settings)
     {
-        if (!$newsItem && $newsUid = $GLOBALS['TSFE']->register['T3SPORTS_NEWSUID']) {
+        if (!$newsItem && $newsUid = TYPO3::getTSFE()->register['T3SPORTS_NEWSUID'] ?? null) {
             $newsItem = $this->newsRepository->findByUid($newsUid);
 
             return [

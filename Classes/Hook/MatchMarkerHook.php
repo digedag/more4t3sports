@@ -120,7 +120,7 @@ class MatchMarkerHook
         // jetzt das contentelement parsen
         $cObj->start($ttContent, 'tt_content');
         // Wird vom Listener abgegriffen
-        $GLOBALS['TSFE']->register['T3SPORTS_NEWSUID'] = $newsUid;
+        TYPO3::getTSFE()->register['T3SPORTS_NEWSUID'] = $newsUid;
 
         $content = $cObj->cObjGetSingle('<tt_content', []);
 
