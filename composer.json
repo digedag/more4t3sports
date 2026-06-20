@@ -54,10 +54,14 @@
         "preferred-install": {
             "typo3/cms": "source"
         },
-        "audit": {
-            "abandoned": "ignore",
-            "block-insecure": false
-        },
+		"policy": {
+			"abandoned": {
+				"audit": "ignore"
+			},
+			"advisories": {
+				"block": false
+			}
+		},
         "allow-plugins": {
             "typo3/class-alias-loader": true,
             "typo3/cms-composer-installers": true,
