@@ -50,7 +50,6 @@ class T3socialsService
         MatchTickerMessageBuilder $mtMsgBuilder,
         MatchStatusMessageBuilder $msMsgBuilder
     ) {
-        $this->networkSrv = $networkSrv;
         $this->mtMsgBuilder = $mtMsgBuilder;
         $this->msMsgBuilder = $msMsgBuilder;
     }
